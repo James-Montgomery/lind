@@ -1,5 +1,5 @@
 """
-Project Name
+Lind
 ============
 
 How to use the documentation
@@ -16,17 +16,14 @@ TAB-completion and introspection capabilities.  See below for further
 instructions.
 
 The docstring examples assume that `numpy` has been imported as `np`::
-  >>> import numpy as np
+  >>> import lind as ld
 Code snippets are indicated by three greater-than signs::
   >>> x = 42
   >>> x = x + 1
 Use the built-in ``help`` function to view a function's docstring::
-  >>> help(np.sort)
+  >>> help(ld.function)
 """
 
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
-
-from project_name import example_module
-from project_name import example_module_2

@@ -1,4 +1,4 @@
-Welcome to project_name's documentation!
+Welcome to Lind's documentation!
 ========================================
 
 .. toctree::

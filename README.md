@@ -1,4 +1,4 @@
-# Project_Name
+# Lind
 
 A short description.
 
@@ -25,7 +25,7 @@ pip install .
 To install from [pypi](https://pypi.org/):
 
 ```
-pip install -U project_name
+pip install -U lind
 ```
 
 To install the package with test dependencies add `["tests"]` to the install command:
@@ -33,7 +33,7 @@ To install the package with test dependencies add `["tests"]` to the install com
 ```
 pip install .["tests"]
 # or
-pip install -U project_name["tests"]
+pip install -U lind["tests"]
 ```
 
 ## Testing
@@ -53,7 +53,7 @@ To install the project  with test dependencies see the install section.
 We use the pytest framework for unit testing.
 
 ```
-pytest -vvl -s --cov project_name --disable-pytest-warnings
+pytest -vvl -s --cov lind --disable-pytest-warnings
 ```
 
 ### Running the style tests
@@ -61,7 +61,7 @@ pytest -vvl -s --cov project_name --disable-pytest-warnings
 Having neat and legible code is important. Having documentation is also important. We use pylint as our style guide framework. Many of our naming conventions follow directly from the literary sources they come from. This makes it easier to read the mathematical equations and see how they translate into the code. This sometimes forces us to break pep8 conventions for naming.
 
 ```
-pylint project_name --disable=invalid-name
+pylint lind --disable=invalid-name
 ```
 
 ## Contributor's Guide

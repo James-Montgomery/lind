@@ -20,7 +20,7 @@ shutil.copy("../LICENSE.md", "./markdown/LICENSE.md")
 
 # -- Project information -----------------------------------------------------
 
-project = 'project_name'
+project = 'Lind'
 copyright = '2020, James  Montgomery'
 author = 'James  Montgomery'
 

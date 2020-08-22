@@ -38,8 +38,8 @@ def setup_package():
     """
 
     setup(
-        name="Package",
-        packages=["project_name"],
+        name="Lind",
+        packages=["lind"],
         version=versioneer.get_version(),
 
         author="James Montgomery",
