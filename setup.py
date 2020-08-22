@@ -12,12 +12,12 @@ import versioneer
 # Note: setup.cfg is set up to only recognise tags starting with v
 
 # git describe --tags # gets the current tag
-# git tag v0.0.01 # update the tag to something, e.g. v0.0.01
+# git tag v0.0.011 # update the tag to something, e.g. v0.0.01
 # git push origin --tags # push update to branch
 
 # conda activate python_env
 # python3 -m pip install --user --upgrade setuptools wheel
-# rm -rf build && rm -rf dist && rm -rf *.info
+# rm -rf build;rm -rf dist;rm -rf *.info;rm -rf *.egg-info
 # python3 setup.py sdist bdist_wheel
 # python3 -m twine upload --verbose --repository-url https://upload.pypi.org/legacy/ dist/*
 
