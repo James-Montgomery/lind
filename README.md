@@ -1,6 +1,8 @@
 # Lind
 
-A short description.
+This package is meant to house common tools used in experiments design and analysis. There is little "novel" functionality here, but it is hopefully packaged in a way that is convenient and useful for users.
+
+I began this package for two reasons. First, I was  dissatisfied with the existing packages available for experimentation. They seemed like collections of random tools rather than a cohesive set of utilities that work together in harmony to a united purpose. Second, I used this as an opportunity to refresh my understanding of various statistical tools and methods.
 
 ### Authors
 
@@ -9,6 +11,12 @@ A short description.
 ### License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+### About the Name
+
+Looking for a name for this package I tried looking back into the history of experimentation. I was tempted to name the package after King Nebuchadnezzar in reference to the "legumes and water" anecdote from the book of Daniel. This is often considered one of the earliest controlled "trials".
+
+However, some of the first modern controlled trials were conducted by Dr. James Lind. There are many scatter references to trials throughout history, but Lind represented the start of the modern era of controlled trials and their integration into the scientific method. Hence I named the package after Lind. If you  have a chance, I recommend taking an afternoon and reading about the work Lind did to fight the disease Scurvy. 
 
 ## Getting Started
 
