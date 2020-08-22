@@ -39,7 +39,7 @@ def setup_package():
     """
 
     setup(
-        name="Lind",
+        name="lind",
         packages=["lind"],
         version=versioneer.get_version(),
 
