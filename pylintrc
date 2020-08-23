@@ -1,6 +1,7 @@
 [MASTER]
 
 # pylint lind --jobs 4 --disable=invalid-name --ignore=_version.py --generate-rcfile > pylintrc.txt
+# add `-r y` to get the full style report
 
 # A comma-separated list of package or module names from where C extensions may
 # be loaded. Extensions are loading into the active Python interpreter and may
@@ -63,6 +64,7 @@ confidence=
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
 disable=invalid-name,
+        logging-format-interpolation,
         print-statement,
         parameter-unpacking,
         unpacking-in-except,

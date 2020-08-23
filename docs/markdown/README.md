@@ -16,7 +16,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 Looking for a name for this package I tried looking back into the history of experimentation. I was tempted to name the package after King Nebuchadnezzar in reference to the "legumes and water" anecdote from the book of Daniel. This is often considered one of the earliest controlled "trials".
 
-However, some of the first modern controlled trials were conducted by Dr. James Lind. There are many scatter references to trials throughout history, but Lind represented the start of the modern era of controlled trials and their integration into the scientific method. Hence I named the package after Lind. If you  have a chance, I recommend taking an afternoon and reading about the work Lind did to fight the disease Scurvy. 
+However, some of the first modern controlled trials were conducted by Dr. James Lind. There are many scatter references to trials throughout history, but Lind represented the start of the modern era of controlled trials and their integration into the scientific method. Hence I named the package after Lind. If you  have a chance, I recommend taking an afternoon and reading about the work Lind did to fight the disease Scurvy.
 
 <!--
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3149409/
@@ -34,7 +34,7 @@ For a local installation, first git clone this repository. Then follow these ins
 pip install .
 ```
 
-To install from [pypi](https://pypi.org/):
+To install from [pypi](https://pypi.org/project/lind/):
 
 ```
 pip install -U lind
@@ -73,7 +73,7 @@ pytest
 Having neat and legible code is important. Having documentation is also important. We use pylint as our style guide framework. Many of our naming conventions follow directly from the literary sources they come from. This makes it easier to read the mathematical equations and see how they translate into the code. This sometimes forces us to break pep8 conventions for naming. Linting presets are defined in pylintrc.
 
 ```
-pylint lind 
+pylint lind
 ```
 
 ## Contributor's Guide

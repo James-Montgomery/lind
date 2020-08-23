@@ -18,12 +18,16 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	echo --- Install local package with tests in editable mode . . .
-	cd .. && pip -q install -e .["tests"]
+	cd .. && pip -q install -e .["tests"] # must install as  editable for autodocs to work
 	echo --- Run package tests and generate coverage report . . .
 	cd .. && pytest
+	echo --- Run package style checks and generate style report . . .
+	cd .. && pylint -f text lind > ./docs/style/pylint_report.txt || echo "required to avoid makefile error"
 	echo --- Run autodoc to update package documentation . . .
 	sphinx-apidoc -f -o source/ ../lind
 	echo --- Run documentation coverage rport . . .
 	sphinx-build -b coverage . build/coverage
+	echo --- logging current git tag . . .
+	git describe --tags > ./latest_tag.txt
 	echo --- Make documentation . . .
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

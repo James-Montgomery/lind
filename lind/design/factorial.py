@@ -5,14 +5,14 @@ factorial: This module contains tools for designing factorial experiments.
 import logging
 from typing import Union, List, Optional
 
-import numpy as np
-from scipy.special import binom as binom
-
-import pandas as pd
-from patsy import dmatrix
-
 from itertools import product, combinations
 from fractions import Fraction
+
+import numpy as np
+from scipy.special import binom
+
+import pandas as pd
+from patsy import dmatrix  # pylint: disable=no-name-in-module
 
 # set logging
 logging.basicConfig(level=logging.INFO)
