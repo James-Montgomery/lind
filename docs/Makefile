@@ -17,7 +17,13 @@ help:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
-	cd .. && pip install .
-	sphinx-apidoc -f -o source/ ../project_name
-	#sphinx-build -b coverage . build/coverage
+	echo --- Install local package with tests in editable mode . . .
+	cd .. && pip -q install -e .["tests"]
+	echo --- Run package tests and generate coverage report . . .
+	cd .. && pytest
+	echo --- Run autodoc to update package documentation . . .
+	sphinx-apidoc -f -o source/ ../lind
+	echo --- Run documentation coverage rport . . .
+	sphinx-build -b coverage . build/coverage
+	echo --- Make documentation . . .
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

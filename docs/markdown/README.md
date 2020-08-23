@@ -1,6 +1,8 @@
-# Project_Name
+# Lind
 
-A short description.
+This package is meant to house common tools used in experiments design and analysis. There is little "novel" functionality here, but it is hopefully packaged in a way that is convenient and useful for users.
+
+I began this package for two reasons. First, I was  dissatisfied with the existing packages available for experimentation. They seemed like collections of random tools rather than a cohesive set of utilities that work together in harmony to a united purpose. Second, I used this as an opportunity to refresh my understanding of various statistical tools and methods.
 
 ### Authors
 
@@ -9,6 +11,16 @@ A short description.
 ### License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+### About the Name
+
+Looking for a name for this package I tried looking back into the history of experimentation. I was tempted to name the package after King Nebuchadnezzar in reference to the "legumes and water" anecdote from the book of Daniel. This is often considered one of the earliest controlled "trials".
+
+However, some of the first modern controlled trials were conducted by Dr. James Lind. There are many scatter references to trials throughout history, but Lind represented the start of the modern era of controlled trials and their integration into the scientific method. Hence I named the package after Lind. If you  have a chance, I recommend taking an afternoon and reading about the work Lind did to fight the disease Scurvy. 
+
+<!--
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3149409/
+-->
 
 ## Getting Started
 
@@ -22,10 +34,10 @@ For a local installation, first git clone this repository. Then follow these ins
 pip install .
 ```
 
-To install from [pypi](#):
+To install from [pypi](https://pypi.org/):
 
 ```
-pip install -U project_name
+pip install -U lind
 ```
 
 To install the package with test dependencies add `["tests"]` to the install command:
@@ -33,7 +45,7 @@ To install the package with test dependencies add `["tests"]` to the install com
 ```
 pip install .["tests"]
 # or
-pip install -U project_name["tests"]
+pip install -U lind["tests"]
 ```
 
 ## Testing
@@ -50,18 +62,18 @@ To install the project  with test dependencies see the install section.
 
 ### Running the unit tests
 
-We use the pytest framework for unit testing.
+We use the pytest framework for unit testing. Test preset args are defined in `pytest.ini`.
 
 ```
-pytest -vvl -s --cov project_name --disable-pytest-warnings
+pytest
 ```
 
 ### Running the style tests
 
-Having neat and legible code is important. Having documentation is also important. We use pylint as our style guide framework. Many of our naming conventions follow directly from the literary sources they come from. This makes it easier to read the mathematical equations and see how they translate into the code. This sometimes forces us to break pep8 conventions for naming.
+Having neat and legible code is important. Having documentation is also important. We use pylint as our style guide framework. Many of our naming conventions follow directly from the literary sources they come from. This makes it easier to read the mathematical equations and see how they translate into the code. This sometimes forces us to break pep8 conventions for naming. Linting presets are defined in pylintrc.
 
 ```
-pylint project_name --disable=invalid-name
+pylint lind 
 ```
 
 ## Contributor's Guide
@@ -82,25 +94,10 @@ Please use pytest as your testing suite. You code should have >= 80% coverage.
 
 ### Updating the Docs
 
-<!--
-sphinx-quickstart --ext-autodoc
-# comment conf.py file
-# add docs/.nojekyll file
-# update build dir in docs/Makefile
-# update static dir in docs/conf.py
-# create dummy docs/index.html
--->
-
 Updating the documentation is simple. First, let auto-docs check for updates to the package structure.
 
 ```
 cd docs
-sphinx-apidoc -o . ../project_name/
-```
-
-Finally, rebuild the html files.
-
-```
 make html
 ```
 

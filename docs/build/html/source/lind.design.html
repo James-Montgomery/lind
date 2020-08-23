@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lind.design package &mdash; Lind  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Lind
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/README.html">Lind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/LICENSE.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Lind</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>lind.design package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/lind.design.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="lind-design-package">
+<h1>lind.design package<a class="headerlink" href="#lind-design-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lind.design.factorial">
+<span id="lind-design-factorial-module"></span><h2>lind.design.factorial module<a class="headerlink" href="#module-lind.design.factorial" title="Permalink to this headline">¶</a></h2>
+<p>factorial: This module contains tools for designing factorial experiments.</p>
+<dl class="function">
+<dt id="lind.design.factorial.design_full_factorial">
+<code class="sig-prename descclassname">lind.design.factorial.</code><code class="sig-name descname">design_full_factorial</code><span class="sig-paren">(</span><em class="sig-param">factors: List[List], factor_names: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.factorial.design_full_factorial" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function helps create a full factorial experiment design. Given how easy it is to design a
+full factorial experiment once the factors and levels have been specified, this is more of a
+convenience function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>factors</strong> (<em>List[List]</em>) – a list of lists representing factors and levels</p></li>
+<li><p><strong>factor_names</strong> (<em>List[str]</em>) – a list of names for the factors in the first argument. Must share the order of the first
+argument.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># create full factorial design for a 2 level 3 factor experiment</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">design_df</span> <span class="o">=</span> <span class="n">design_full_factorial</span><span class="p">(</span><span class="n">factors</span><span class="o">=</span><span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">factor_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;factor_one&quot;</span><span class="p">,</span> <span class="s2">&quot;factor_two&quot;</span><span class="p">,</span> <span class="s2">&quot;factor_three&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.design.factorial.design_partial_factorial">
+<code class="sig-prename descclassname">lind.design.factorial.</code><code class="sig-name descname">design_partial_factorial</code><span class="sig-paren">(</span><em class="sig-param">k: int</em>, <em class="sig-param">res: int</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.factorial.design_partial_factorial" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function helps design 2 level partial factorial experiments. These experiments are often
+described using the syntax l**(k-p) where l represents the level of each factor, k represents
+the total number of factors considered, and p represents a scaling factor relative to the full
+factorial design.</p>
+<p>This function assumes that l=2. Users are not asked to set p, instead the user sets a minimum
+desired resolution for their experiment. Resolution describes the kind of aliasing incurred by
+scaling down from a full to a partial factorial design. Higher resolutions have less potential
+aliasing (confounding).</p>
+<p>Resolution number is determined through the defining relation of the partial factorial design.
+For the 6 factor design 2**(6-p) with factors ABCDEF, example defining relations (I) are shown
+below. The resolution cannot exceed the number of factors in the experiment. So a 6 factor
+experiment can be at most a resolution 6 (otherwise it would be a full factorial experiment).
+* Res I: I = A
+* Res II: I = AB
+* Res III: I = ABC
+* Res IV: I = ABCD
+* Res V: I = ABCDE
+* Res VI: I = ABCDEF</p>
+<p>Practically we tend to use resolution III-, IV- and V-designs.
+* Res I: Cannot distinguish between levels within main effects (not useful).
+* Res II: Main effects may be aliased with other main effects (not useful).
+* Res III: Main effects may be aliased with two-way interactions.
+* Res IV: Two-way interactions may be aliased with each other.
+* Res V: Two-way interactions may be aliased with three-way interactions.
+* Res VI: Three-way interactions may be aliased with each other.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<em>int</em>) – the total number of factors considered in the experiment</p></li>
+<li><p><strong>res</strong> (<em>int</em>) – the desired minimum resolution of the experiment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dataframe with the partial factorial design</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># create partial factorial design for a 2 level 4 factor resolution III experiment</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">design_df</span> <span class="o">=</span> <span class="n">design_partial_factorial</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lind.design">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lind.design" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="design">
+<h3>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h3>
+<p>This module is dedicated to design of experiments (DOE).</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, James  Montgomery
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

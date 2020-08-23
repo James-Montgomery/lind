@@ -138,6 +138,7 @@ dmypy.json
 *.ipynb
 !notebooks/*.ipynb
 
+*.pickle
 *.pdf
 *.png
 *.jpg
@@ -147,5 +148,8 @@ dmypy.json
 
 .python*
 .bash*
+
+/docs/build/coverage/
+/docs/build/coverage/*
 
 *trash*

@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 __all__ = ['design_full_factorial', 'design_partial_factorial']
 
 
-########################################################################################################################
+####################################################################################################
 
 
 def _array_to_string(arr_like: Union[List, np.ndarray]) -> np.ndarray:
@@ -39,7 +39,8 @@ def _k_combo(k: int, res: int) -> int:
 
 
 _k_combo_vec = np.vectorize(_k_combo, excluded=['res'],
-                            doc="The number of combinations of k factors given a specific resolution")
+                            doc="The number of combinations of k factors "
+                                "given a specific resolution")
 
 
 def _filter_by_length(words: Union[List, np.ndarray], size: int = 1, operator: str = "eq") -> List:
@@ -53,22 +54,25 @@ def _filter_by_length(words: Union[List, np.ndarray], size: int = 1, operator: s
     raise Exception("Invalid operator {}".format(operator))
 
 
-########################################################################################################################
+####################################################################################################
 
 
-def design_full_factorial(factors: List[List], factor_names: Optional[List[str]] = None) -> pd.DataFrame:
+def design_full_factorial(factors: List[List],
+                          factor_names: Optional[List[str]] = None) -> pd.DataFrame:
     """
     design_full_factorial
 
-    This function helps create a full factorial experiment design. Given how easy it is to design a full factorial
-    experiment once the factors and levels have been specified, this is more of a convenience function.
+    This function helps create a full factorial experiment design. Given how easy it is to design a
+    full factorial experiment once the factors and levels have been specified, this is more of a
+    convenience function.
 
     Parameters
     ----------
     factors : List[List]
         a list of lists representing factors and levels
     factor_names : List[str]
-        a list of names for the factors in the first argument. Must share the order of the first argument.
+        a list of names for the factors in the first argument. Must share the order of the first
+        argument.
 
     Returns
     -------
@@ -82,7 +86,8 @@ def design_full_factorial(factors: List[List], factor_names: Optional[List[str]]
     """
     assert factor_names is None or len(factor_names) == len(factors), \
         "The length of factor_names must match the length of factors."
-    factor_names = factor_names if factor_names is not None else ["x{}".format(i) for i in range(len(factors))]
+    factor_names = factor_names if factor_names is not None else \
+        ["x{}".format(i) for i in range(len(factors))]
     return pd.DataFrame(data=list(product(*factors)), columns=factor_names)
 
 
@@ -90,18 +95,20 @@ def design_partial_factorial(k: int, res: int) -> pd.DataFrame:
     """
     design_partial_factorial
 
-    This function helps design 2 level partial factorial experiments. These experiments are often described using the
-    syntax l**(k-p) where l represents the level of each factor, k represents the total number of factors considered,
-    and p represents a scaling factor relative to the full factorial design.
+    This function helps design 2 level partial factorial experiments. These experiments are often
+    described using the syntax l**(k-p) where l represents the level of each factor, k represents
+    the total number of factors considered, and p represents a scaling factor relative to the full
+    factorial design.
 
-    This function assumes that l=2. Users are not asked to set p, instead the user sets a minimum desired resolution for
-    their experiment. Resolution describes the kind of aliasing incurred by scaling down from a full to a partial
-    factorial design. Higher resolutions have less potential aliasing (confounding).
+    This function assumes that l=2. Users are not asked to set p, instead the user sets a minimum
+    desired resolution for their experiment. Resolution describes the kind of aliasing incurred by
+    scaling down from a full to a partial factorial design. Higher resolutions have less potential
+    aliasing (confounding).
 
-    Resolution number is determined through the defining relation of the partial factorial design. For the 6 factor
-    design 2**(6-p) with factors ABCDEF, example defining relations (I) are shown below. The resolution cannot exceed
-    the number of factors in the experiment. So a 6 factor experiment can be at most a resolution 6 (otherwise it would
-    be a full factorial experiment).
+    Resolution number is determined through the defining relation of the partial factorial design.
+    For the 6 factor design 2**(6-p) with factors ABCDEF, example defining relations (I) are shown
+    below. The resolution cannot exceed the number of factors in the experiment. So a 6 factor
+    experiment can be at most a resolution 6 (otherwise it would be a full factorial experiment).
     * Res I: I = A
     * Res II: I = AB
     * Res III: I = ABC

@@ -19,11 +19,11 @@ Code snippets are indicated by three greater-than signs::
   >>> x = 42
   >>> x = x + 1
 Use the built-in ``help`` function to view a function's docstring::
-  >>> help(ld.function)
+  >>> help(ld.design.design_full_factorial)
 """
 
-from lind  import design
-from lind  import analysis
+from lind import design
+from lind import analysis
 
 from ._version import get_versions
 __version__ = get_versions()['version']

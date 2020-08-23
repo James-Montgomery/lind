@@ -13,3 +13,4 @@ Index and Search:
 
 * :ref:`modindex`
 * :ref:`search`
+* `Test Coverage Report <../../coverage/index.html>`_

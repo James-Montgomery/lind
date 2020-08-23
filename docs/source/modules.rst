@@ -1,7 +1,7 @@
-project_name
-============
+lind
+====
 
 .. toctree::
    :maxdepth: 4
 
-   project_name
+   lind

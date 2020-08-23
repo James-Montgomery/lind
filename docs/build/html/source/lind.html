@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lind &mdash; Lind  documentation</title>
+  <title>lind package &mdash; Lind  documentation</title>
   
 
   
@@ -125,13 +125,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>lind</li>
+      <li>lind package</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/source/modules.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/source/lind.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -168,34 +168,61 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="lind">
-<h1>lind<a class="headerlink" href="#lind" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lind-package">
+<h1>lind package<a class="headerlink" href="#lind-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="lind.html">lind package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lind.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lind.analysis.html">lind.analysis package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="lind.analysis.html#module-lind.analysis">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="lind.design.html">lind.design package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="lind.design.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lind.design.html#module-lind.design.factorial">lind.design.factorial module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lind.design.html#module-lind.design">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lind.analysis.html">lind.analysis package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lind.analysis.html#module-lind.analysis">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lind.analysis.html#analysis">Analysis</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="lind.html#module-lind">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lind.html#lind">Lind</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="lind.html#how-to-use-the-documentation">How to use the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lind.design.html">lind.design package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lind.design.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lind.design.html#module-lind.design.factorial">lind.design.factorial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lind.design.html#module-lind.design">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lind.design.html#design">Design</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+</div>
+</div>
+<div class="section" id="module-lind">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lind" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="lind">
+<h3>Lind<a class="headerlink" href="#lind" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="how-to-use-the-documentation">
+<h4>How to use the documentation<a class="headerlink" href="#how-to-use-the-documentation" title="Permalink to this headline">¶</a></h4>
+<p>Documentation is available in two forms: docstrings provided
+with the code, and a loose standing reference guide, available from
+the documentation site <a class="reference external" href="https://james-montgomery.github.io/project_name/">https://james-montgomery.github.io/project_name/</a>.</p>
+<p>We recommend exploring the docstrings using
+<a class="reference external" href="https://ipython.org">IPython</a>, an advanced Python shell with
+TAB-completion and introspection capabilities.  See below for further
+instructions.</p>
+<dl>
+<dt>The docstring examples assume that <cite>numpy</cite> has been imported as <cite>np</cite>::</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">lind</span> <span class="k">as</span> <span class="nn">ld</span>
+</pre></div>
+</div>
+</dd>
+<dt>Code snippets are indicated by three greater-than signs::</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</dd>
+<dt>Use the built-in <code class="docutils literal notranslate"><span class="pre">help</span></code> function to view a function’s docstring::</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">ld</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">design_full_factorial</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
 </div>
 </div>
 
