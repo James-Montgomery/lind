@@ -143,6 +143,7 @@ dmypy.json
 *.png
 *.jpg
 *.csv
+!lind/design/static_designs/*.csv
 *.txt
 !requirements*.txt
 !docs/style/pylint*report.txt

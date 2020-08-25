@@ -1,7 +1,16 @@
 """
 factorial: This module contains tools for designing factorial experiments.
-"""
 
+The factorial designs here are meant to yield balanced and orthogonal designs. An experimental
+design is orthogonal if the effects of any factor (i.e. factor A) balance out (sum to zero) across
+the effects of the other factors (i.e. factors B and C). In other words, if A is orthogonal to B
+and C, then the measurement of factors B and C will not be biased by the effect size fo A. A
+balanced design assumes equal sample sizes across att cohorts / test cells.
+
+If possible, all combinations (rows) in these designs should be run in a random order, or in
+parallel using proper randomization of cohort assignment.
+"""
+import os
 import logging
 from typing import Union, List, Optional
 
@@ -11,7 +20,7 @@ from fractions import Fraction
 import numpy as np
 from scipy.special import binom
 
-import pandas as pd
+from pandas import DataFrame, read_csv
 from patsy import dmatrix  # pylint: disable=no-name-in-module
 
 # set logging
@@ -19,8 +28,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # define public functions (ignored by jupyter notebooks)
-__all__ = ['design_full_factorial', 'design_partial_factorial']
-
+__all__ = [
+    'design_full_factorial',
+    'design_partial_factorial',
+    'fetch_partial_factorial_design'
+]
 
 ####################################################################################################
 
@@ -58,7 +70,7 @@ def _filter_by_length(words: Union[List, np.ndarray], size: int = 1, operator: s
 
 
 def design_full_factorial(factors: List[List],
-                          factor_names: Optional[List[str]] = None) -> pd.DataFrame:
+                          factor_names: Optional[List[str]] = None) -> DataFrame:
     """
     design_full_factorial
 
@@ -88,10 +100,10 @@ def design_full_factorial(factors: List[List],
         "The length of factor_names must match the length of factors."
     factor_names = factor_names if factor_names is not None else \
         ["x{}".format(i) for i in range(len(factors))]
-    return pd.DataFrame(data=list(product(*factors)), columns=factor_names)
+    return DataFrame(data=list(product(*factors)), columns=factor_names)
 
 
-def design_partial_factorial(k: int, res: int) -> pd.DataFrame:
+def design_partial_factorial(k: int, res: int) -> DataFrame:
     """
     design_partial_factorial
 
@@ -136,8 +148,8 @@ def design_partial_factorial(k: int, res: int) -> pd.DataFrame:
     pd.DataFrame
         A dataframe with the partial factorial design
 
-    Example
-    -------
+    Examples
+    --------
     >>> # create partial factorial design for a 2 level 4 factor resolution III experiment
     >>> design_df = design_partial_factorial(k=4, res=3)
     """
@@ -147,8 +159,9 @@ def design_partial_factorial(k: int, res: int) -> pd.DataFrame:
     # Assume l=2 and use k specified by user to solve for p in design
     n = np.arange(res - 1, k, 1)
     k_minus_p = k - 1 if res == k else n[~(_k_combo_vec(n, res) < k)][0]
+
     logging.info("Partial Factorial Design: l=2, k={}, p={}".format(k, k - k_minus_p))
-    logging.info("Ratio to Full Factorial Design: {}".format(Fraction(2**k_minus_p)))
+    logging.info("Ratio to Full Factorial Design: {}".format(Fraction(2**k_minus_p / 2**k)))
 
     # identify the main effects and interactions for the design
     main_factors = np.arange(k_minus_p)
@@ -183,3 +196,56 @@ def design_partial_factorial(k: int, res: int) -> pd.DataFrame:
         ["x{}".format(i) for i in range(partial_factorial_design.shape[1])]
 
     return partial_factorial_design
+
+
+####################################################################################################
+
+
+def fetch_partial_factorial_design(design_name: str = "toc") -> DataFrame:
+    """
+    fetch_partial_factorial_design
+
+    The function design_partial_factorial auto generates partial factorial designs using an
+    algorithm. We validate that algorithm in our unit tests by comparing against known designs
+    from popular experimental design textbooks. For those that want to use the designs from
+    these books rather than the auto-generated designs, please use thos function.
+
+    There are multiple ways to generate certain designs given a fixed k and p
+    (using formula l**k-p). Both fetch_partial_factorial_design and design_partial_factorial
+    deterministically return designs, but there are typically other ways to formulate these designs
+    if the user would like to work it out on their own.
+
+    Parameters
+    ----------
+    design_name : str
+        the name of the design to fetch; to see available designs input `toc`
+
+    Returns
+    -------
+    pd.DataFrame
+        experiment design or toc of available designs
+
+    References
+    ----------
+    * Section 5.3.3.4.7 of the Engineering Statistics Handbook by NIST
+    * Statistics For Experimentors by BOX, HUNTER & HUNTER
+    * Systems Of Experimental Design, VOL. 2 by TAGUCHI
+
+    Examples
+    --------
+    >>> table_of_contents_of_designs = fetch_partial_factorial_design("toc")
+    >>> design = fetch_partial_factorial_design("2**3-1")
+
+    Notes
+    -----
+    * 2**3-1 is equivalent to a Taguchi L4 design
+    * 2**15-11 is equivalent to a Taguchi L16 design
+    * 2**31-26 is equivalent to a Taguchi L32 design
+    """
+    design_name = design_name.lower().strip() + ".csv"
+    path = os.path.dirname(os.path.abspath(__file__))
+    try:
+        return read_csv(path + "/static_designs/" + design_name, index_col=0)
+    except FileNotFoundError as exception:
+        logging.error(exception)
+        raise ValueError("Please input a valid design. `{}` not found.".format(design_name[:-4]))
