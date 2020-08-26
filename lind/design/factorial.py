@@ -61,18 +61,6 @@ _k_combo_vec = vectorize(_k_combo, excluded=['res'],
                          doc="The number of combinations of k factors given a specific resolution")
 
 
-# def _filter_by_length(words: Union[List, np.ndarray],
-#                       size: int = 1, operator: str = "eq") -> List:
-#     """"""
-#     if operator == "eq":
-#         return [word for word in words if len(word) == size]
-#     if operator == "lt":
-#         return [word for word in words if len(word) < size]
-#     if operator == "gt":
-#         return [word for word in words if len(word) > size]
-#     raise Exception("Invalid operator {}".format(operator))
-
-
 ####################################################################################################
 
 
@@ -193,9 +181,6 @@ def design_partial_factorial(k: int, res: int) -> DataFrame:
         ["x" + i for i in j.split(":")]
         for j in [i for i in factors.split(" ") if i and ":" in i]
     ]
-
-    # code below replaced by patsy
-    # partial_factorial_design = append_interactions(full_factorial_design, interactions, False)
 
     design = "+".join(full_factorial_design.columns.tolist() + [":".join(i) for i in interactions])
     partial_factorial_design = dmatrix(design, full_factorial_design, return_type='dataframe').drop(

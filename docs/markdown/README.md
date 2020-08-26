@@ -18,10 +18,6 @@ Looking for a name for this package I tried looking back into the history of exp
 
 However, some of the first modern controlled trials were conducted by Dr. James Lind. There are many scatter references to trials throughout history, but Lind represented the start of the modern era of controlled trials and their integration into the scientific method. Hence I named the package after Lind. If you  have a chance, I recommend taking an afternoon and reading about the work Lind did to fight the disease Scurvy.
 
-<!--
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3149409/
--->
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.

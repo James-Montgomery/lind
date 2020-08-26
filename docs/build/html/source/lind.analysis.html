@@ -170,6 +170,200 @@
 </style>
 <div class="section" id="lind-analysis-package">
 <h1>lind.analysis package<a class="headerlink" href="#lind-analysis-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lind.analysis.multiple_comparison_procedures">
+<span id="lind-analysis-multiple-comparison-procedures-module"></span><h2>lind.analysis.multiple_comparison_procedures module<a class="headerlink" href="#module-lind.analysis.multiple_comparison_procedures" title="Permalink to this headline">¶</a></h2>
+<p>multiple_comparison_procedures: This module contains functions to correct for multiple
+comparisons in hypothesis testing. Corrected p values will be referred to as q values. Multiple
+comparison procedures (MCPs) are sometimes referred to as correction factors.</p>
+<p>MCPs tend to correct for family wise error rate (FWER) or false discovery rate (FDR).</p>
+<p>Author’s Note: This code draws from example code referenced in Rosetta Code. That code is a
+translation of code in the R stats package and falls under the R 4.1.0 license (GPL v2).</p>
+<p>Most of the code in this module is based on R source code covered by the GPL license. It is thus a
+modified version covered by the GPL.</p>
+<p>Recommended import style:
+&gt;&gt;&gt; from lind.analysis import multiple_comparison_procedures as mcp</p>
+<dl class="simple">
+<dt>TODO: There are parts of this code written by convenience that could be vectorized for increased</dt><dd><p>speed. Will need to update code in the future to better optimize for speed.</p>
+</dd>
+</dl>
+<dl class="function">
+<dt id="lind.analysis.multiple_comparison_procedures.bh">
+<code class="sig-prename descclassname">lind.analysis.multiple_comparison_procedures.</code><code class="sig-name descname">bh</code><span class="sig-paren">(</span><em class="sig-param">p_values: Union[List, numpy.ndarray]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lind.analysis.multiple_comparison_procedures.bh" title="Permalink to this definition">¶</a></dt>
+<dd><p>bh: Benjamini-Hochberg</p>
+<p>The Benjamini and Hochberg method controls the false discovery rate (FDR), the expected
+proportion of false discoveries amongst the rejected hypotheses. The FDR is a less stringent
+condition than the family-wise error rate (so bh is more powerful than many other correction
+methods).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p_values</strong> (<em>Union[List[float], ndarray[float]]</em>) – List or numpy array of p values to be converted into q values</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the q values for the respective p value inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Controlling the false discovery rate: a practical and powerful approach to multiple testing.</dt><dd><p>by Benjamini and Hochberg</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.multiple_comparison_procedures.by">
+<code class="sig-prename descclassname">lind.analysis.multiple_comparison_procedures.</code><code class="sig-name descname">by</code><span class="sig-paren">(</span><em class="sig-param">p_values: Union[List, numpy.ndarray]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lind.analysis.multiple_comparison_procedures.by" title="Permalink to this definition">¶</a></dt>
+<dd><p>by: Benjamini-Yekutieli</p>
+<p>The Benjamini and Yekutieli method controls the false discovery rate (FDR), the expected
+proportion of false discoveries amongst the rejected hypotheses. The FDR is a less stringent
+condition than the family-wise error rate (so bh is more powerful than many other correction
+methods).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p_values</strong> (<em>Union[List[float], ndarray[float]]</em>) – List or numpy array of p values to be converted into q values</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the q values for the respective p value inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>The control of the false discovery rate in multiple testing under dependency.</dt><dd><p>by Benjamini and Yekutieli</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.multiple_comparison_procedures.bonferonni">
+<code class="sig-prename descclassname">lind.analysis.multiple_comparison_procedures.</code><code class="sig-name descname">bonferonni</code><span class="sig-paren">(</span><em class="sig-param">p_values: Union[List, numpy.ndarray]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lind.analysis.multiple_comparison_procedures.bonferonni" title="Permalink to this definition">¶</a></dt>
+<dd><p>bonferonni: Bonferonni</p>
+<p>Correction to control for family wise error rate (FWER).</p>
+<p>Recommended to use Hold instead of the uncorrected Bonferonni. Holm is more powerful and valid
+under the same assumption.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p_values</strong> (<em>Union[List[float], ndarray[float]]</em>) – List or numpy array of p values to be converted into q values</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the q values for the respective p value inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Teoria statistica delle classi e calcolo delle probabilità by Bonferroni</p></li>
+<li><p>Multiple Hypothesis Testing by Shaffer</p></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.multiple_comparison_procedures.holm">
+<code class="sig-prename descclassname">lind.analysis.multiple_comparison_procedures.</code><code class="sig-name descname">holm</code><span class="sig-paren">(</span><em class="sig-param">p_values: Union[List, numpy.ndarray]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lind.analysis.multiple_comparison_procedures.holm" title="Permalink to this definition">¶</a></dt>
+<dd><p>holm: Holm</p>
+<p>Correction to control for family wise error rate (FWER).</p>
+<p>More powerful than unmodified Bonferonni and valid under the same assumption.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p_values</strong> (<em>Union[List[float], ndarray[float]]</em>) – List or numpy array of p values to be converted into q values</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the q values for the respective p value inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>A simple sequentially rejective multiple test procedure by Holm</p></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.multiple_comparison_procedures.hommel">
+<code class="sig-prename descclassname">lind.analysis.multiple_comparison_procedures.</code><code class="sig-name descname">hommel</code><span class="sig-paren">(</span><em class="sig-param">p_values: Union[List, numpy.ndarray]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lind.analysis.multiple_comparison_procedures.hommel" title="Permalink to this definition">¶</a></dt>
+<dd><p>hommel: Hommel</p>
+<p>Correction to control for family wise error rate (FWER).</p>
+<p>Valid when the hypothesis tests are independent or when they are non-negatively associated
+(see Sarkar). Slightly more powerful than Hochberg but also slower.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p_values</strong> (<em>Union[List[float], ndarray[float]]</em>) – List or numpy array of p values to be converted into q values</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the q values for the respective p value inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>A stagewise rejective multiple test procedure based on a modified Bonferroni test by Hommel</p></li>
+<li><dl class="simple">
+<dt>Some probability inequalities for ordered MTP2 random variables: a proof of Simes conjecture</dt><dd><p>by Sarkar</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The Simes method for multiple hypothesis testing with positively dependent test statistics</dt><dd><p>by Sarkar</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.multiple_comparison_procedures.hochberg">
+<code class="sig-prename descclassname">lind.analysis.multiple_comparison_procedures.</code><code class="sig-name descname">hochberg</code><span class="sig-paren">(</span><em class="sig-param">p_values: Union[List, numpy.ndarray]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lind.analysis.multiple_comparison_procedures.hochberg" title="Permalink to this definition">¶</a></dt>
+<dd><p>hochberg: Hochberg</p>
+<p>Correction to control for family wise error rate (FWER).</p>
+<p>Valid when the hypothesis tests are independent or when they are non-negatively associated
+(see Sarkar). Slightly less powerful than Hochberg but also faster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p_values</strong> (<em>Union[List[float], ndarray[float]]</em>) – List or numpy array of p values to be converted into q values</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the q values for the respective p value inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>A sharper Bonferroni procedure for multiple tests of significance by Hochberg</p></li>
+<li><dl class="simple">
+<dt>Some probability inequalities for ordered MTP2 random variables: a proof of Simes conjecture</dt><dd><p>by Sarkar</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The Simes method for multiple hypothesis testing with positively dependent test statistics</dt><dd><p>by Sarkar</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="module-lind.analysis">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lind.analysis" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="analysis">

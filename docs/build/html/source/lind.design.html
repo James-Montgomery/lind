@@ -176,6 +176,18 @@
 <div class="section" id="module-lind.design.factorial">
 <span id="lind-design-factorial-module"></span><h2>lind.design.factorial module<a class="headerlink" href="#module-lind.design.factorial" title="Permalink to this headline">¶</a></h2>
 <p>factorial: This module contains tools for designing factorial experiments.</p>
+<p>The factorial designs here are meant to yield balanced and orthogonal designs. An experimental
+design is orthogonal if the effects of any factor (i.e. factor A) balance out (sum to zero) across
+the effects of the other factors (i.e. factors B and C). In other words, if A is orthogonal to B
+and C, then the measurement of factors B and C will not be biased by the effect size fo A. A
+balanced design assumes equal sample sizes across att cohorts / test cells.</p>
+<p>One quick check of orthogonality for a 2 level design is to take the sum of the columns of the
+design. They should all sum to 0. See below:
+&gt;&gt;&gt; design_partial_factorial(factors=6, res=4).sum(axis=0)</p>
+<p>If possible, all combinations (rows) in these designs should be run in a random order, or in
+parallel using proper randomization of cohort assignment.</p>
+<p>Recommended import style:
+&gt;&gt;&gt; from lind.design import factorial</p>
 <dl class="function">
 <dt id="lind.design.factorial.design_full_factorial">
 <code class="sig-prename descclassname">lind.design.factorial.</code><code class="sig-name descname">design_full_factorial</code><span class="sig-paren">(</span><em class="sig-param">factors: List[List], factor_names: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.factorial.design_full_factorial" title="Permalink to this definition">¶</a></dt>
@@ -247,11 +259,52 @@ experiment can be at most a resolution 6 (otherwise it would be a full factorial
 <dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
-<p class="rubric">Example</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># create partial factorial design for a 2 level 4 factor resolution III experiment</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">design_df</span> <span class="o">=</span> <span class="n">design_partial_factorial</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.design.factorial.fetch_partial_factorial_design">
+<code class="sig-prename descclassname">lind.design.factorial.</code><code class="sig-name descname">fetch_partial_factorial_design</code><span class="sig-paren">(</span><em class="sig-param">design_name: str = 'toc'</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.factorial.fetch_partial_factorial_design" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function design_partial_factorial auto generates partial factorial designs using an
+algorithm. We validate that algorithm in our unit tests by comparing against known designs
+from popular experimental design textbooks. For those that want to use the designs from
+these books rather than the auto-generated designs, please use thos function.</p>
+<p>There are multiple ways to generate certain designs given a fixed k and p
+(using formula l**k-p). Both fetch_partial_factorial_design and design_partial_factorial
+deterministically return designs, but there are typically other ways to formulate these designs
+if the user would like to work it out on their own.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>design_name</strong> (<em>str</em>) – the name of the design to fetch; to see available designs input <cite>toc</cite></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>experiment design or toc of available designs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Section 5.3.3.4.7 of the Engineering Statistics Handbook by NIST</p></li>
+<li><p>Statistics For Experimentors by Box, Hunter, &amp; Hunter</p></li>
+<li><p>Systems Of Experimental Design, VOL. 2 by Taguchi</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table_of_contents_of_designs</span> <span class="o">=</span> <span class="n">fetch_partial_factorial_design</span><span class="p">(</span><span class="s2">&quot;toc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">design</span> <span class="o">=</span> <span class="n">fetch_partial_factorial_design</span><span class="p">(</span><span class="s2">&quot;2**3-1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>2**3-1 is equivalent to a Taguchi L4 design</p></li>
+<li><p>2**15-11 is equivalent to a Taguchi L16 design</p></li>
+<li><p>2**31-26 is equivalent to a Taguchi L32 design</p></li>
+</ul>
 </dd></dl>
 
 </div>
