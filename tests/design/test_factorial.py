@@ -2,11 +2,13 @@
 factorial module tests
 """
 
+from numpy import any
+
 import pytest
 from pandas.util.testing import assert_frame_equal
 
-
-from lind.design.factorial import design_full_factorial, design_partial_factorial
+from lind.design.factorial import design_full_factorial, design_partial_factorial, \
+    fetch_partial_factorial_design
 from ._validated_partial_factorial_designs import *
 
 ####################################################################################################
@@ -82,6 +84,48 @@ def test_design_partial_factorial_validated_designs(k, res, validated_design):
         design_partial_factorial(k=k, res=res).sort_values(columns).reset_index(drop=True),
         validated_design.sort_values(columns).reset_index(drop=True)
     )
+
+
+@pytest.mark.parametrize("k, res", [
+    (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (7, 6), (7, 7),
+    (13, 1), (13, 2), (13, 3), (13, 7), (13, 11), (13, 12), (13, 13),
+])
+def test_design_partial_factorial_orthogonal(k, res):
+    """
+    design_partial_factorial orthogonal
+
+    Ensure that this function returns orthogonal designs.
+    """
+    assert not any(design_partial_factorial(k=k, res=res).sum(axis=0).values)
+
+
+####################################################################################################
+
+
+@pytest.mark.parametrize("design", [
+    "2**3-1", "2**5-2", "2**7-3", "2**15-11"
+])
+def test_fetch_partial_factorial_design_orthogonal(design):
+    """
+    fetch_partial_factorial_design orthogonal
+
+    Ensure that this function returns orthogonal designs. These designs are validated by trusted
+    sources, but my motto is "trust but verify".
+    """
+    assert not any(fetch_partial_factorial_design(design).sum(axis=0).values)
+
+
+def test_fetch_partial_factorial_design_value_error():
+    """
+    fetch_partial_factorial_design value error
+
+    Make sure an exception is thrown if an invalid design is requested.
+    """
+
+    with pytest.raises(Exception) as execinfo:
+        fetch_partial_factorial_design("fake design")
+
+    assert str(execinfo.value) == "Please input a valid design. `fake design` not found."
 
 
 if __name__ == '__main__':

@@ -7,8 +7,15 @@ the effects of the other factors (i.e. factors B and C). In other words, if A is
 and C, then the measurement of factors B and C will not be biased by the effect size fo A. A
 balanced design assumes equal sample sizes across att cohorts / test cells.
 
+One quick check of orthogonality for a 2 level design is to take the sum of the columns of the
+design. They should all sum to 0. See below:
+>>> design_partial_factorial(factors=6, res=4).sum(axis=0)
+
 If possible, all combinations (rows) in these designs should be run in a random order, or in
 parallel using proper randomization of cohort assignment.
+
+Recommended import style:
+>>> from lind.design import factorial
 """
 import os
 import logging
@@ -17,7 +24,7 @@ from typing import Union, List, Optional
 from itertools import product, combinations
 from fractions import Fraction
 
-import numpy as np
+from numpy import full, arange, vectorize, ndarray, array_str, asarray
 from scipy.special import binom
 
 from pandas import DataFrame, read_csv
@@ -37,33 +44,33 @@ __all__ = [
 ####################################################################################################
 
 
-def _array_to_string(arr_like: Union[List, np.ndarray]) -> np.ndarray:
+def _array_to_string(arr_like: Union[List, ndarray]) -> ndarray:
     """Utility for converting experiment design string into an array of factors"""
-    return np.array_str(np.asarray(arr_like)).replace("[", "").replace("]", "")
+    return array_str(asarray(arr_like)).replace("[", "").replace("]", "")
 
 
 def _k_combo(k: int, res: int) -> int:
     """The number of combinations of k factors given a specific resolution"""
     return binom(
-        np.full(k - res + 1, k),
-        np.arange(res - 1, k, 1)
+        full(k - res + 1, k),
+        arange(res - 1, k, 1)
     ).sum() + k
 
 
-_k_combo_vec = np.vectorize(_k_combo, excluded=['res'],
-                            doc="The number of combinations of k factors "
-                                "given a specific resolution")
+_k_combo_vec = vectorize(_k_combo, excluded=['res'],
+                         doc="The number of combinations of k factors given a specific resolution")
 
 
-def _filter_by_length(words: Union[List, np.ndarray], size: int = 1, operator: str = "eq") -> List:
-    """"""
-    if operator == "eq":
-        return [word for word in words if len(word) == size]
-    if operator == "lt":
-        return [word for word in words if len(word) < size]
-    if operator == "gt":
-        return [word for word in words if len(word) > size]
-    raise Exception("Invalid operator {}".format(operator))
+# def _filter_by_length(words: Union[List, np.ndarray],
+#                       size: int = 1, operator: str = "eq") -> List:
+#     """"""
+#     if operator == "eq":
+#         return [word for word in words if len(word) == size]
+#     if operator == "lt":
+#         return [word for word in words if len(word) < size]
+#     if operator == "gt":
+#         return [word for word in words if len(word) > size]
+#     raise Exception("Invalid operator {}".format(operator))
 
 
 ####################################################################################################
@@ -157,17 +164,19 @@ def design_partial_factorial(k: int, res: int) -> DataFrame:
     assert res <= k, "Resolution must be smaller than or equal to the number of factors."
 
     # Assume l=2 and use k specified by user to solve for p in design
-    n = np.arange(res - 1, k, 1)
+    n = arange(res - 1, k, 1)
     k_minus_p = k - 1 if res == k else n[~(_k_combo_vec(n, res) < k)][0]
 
     logging.info("Partial Factorial Design: l=2, k={}, p={}".format(k, k - k_minus_p))
     logging.info("Ratio to Full Factorial Design: {}".format(Fraction(2**k_minus_p / 2**k)))
 
     # identify the main effects and interactions for the design
-    main_factors = np.arange(k_minus_p)
-    interactions = [_array_to_string(main_factors).replace(" ", ":")] if res == k else \
+
+    main_factors = arange(k_minus_p)
+    clean = lambda x: x.replace("  ", " ").strip(" ").replace(" ", ":")
+    interactions = [clean(_array_to_string(main_factors))] if res == k else \
         [
-            _array_to_string(c).replace(" ", ":")
+            clean(_array_to_string(c))
             for r in range(res - 1, k_minus_p)
             for c in combinations(main_factors, r)
         ][:k - k_minus_p]
@@ -176,13 +185,13 @@ def design_partial_factorial(k: int, res: int) -> DataFrame:
     factors = " ".join([_array_to_string(main_factors)] + interactions)
     logging.info("Design string: {}".format(factors))
 
-    main_factors = _filter_by_length(factors.split(" "), 1, "eq")
+    main_factors = [i for i in factors.split(" ") if i and ":" not in i]
     two_level_full_factorial = [[-1, 1] for _ in main_factors]
     full_factorial_design = design_full_factorial(two_level_full_factorial)
 
     interactions = [
         ["x" + i for i in j.split(":")]
-        for j in _filter_by_length(factors.split(" "), 1, "gt")
+        for j in [i for i in factors.split(" ") if i and ":" in i]
     ]
 
     # code below replaced by patsy
@@ -228,8 +237,8 @@ def fetch_partial_factorial_design(design_name: str = "toc") -> DataFrame:
     References
     ----------
     * Section 5.3.3.4.7 of the Engineering Statistics Handbook by NIST
-    * Statistics For Experimentors by BOX, HUNTER & HUNTER
-    * Systems Of Experimental Design, VOL. 2 by TAGUCHI
+    * Statistics For Experimentors by Box, Hunter, & Hunter
+    * Systems Of Experimental Design, VOL. 2 by Taguchi
 
     Examples
     --------
