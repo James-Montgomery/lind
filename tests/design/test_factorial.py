@@ -102,9 +102,7 @@ def test_design_partial_factorial_orthogonal(k, res):
 ####################################################################################################
 
 
-@pytest.mark.parametrize("design", [
-    "2**3-1", "2**5-2", "2**7-3", "2**15-11"
-])
+@pytest.mark.parametrize("design", ["2**3-1", "2**5-2", "2**7-3", "2**15-11"])
 def test_fetch_partial_factorial_design_orthogonal(design):
     """
     fetch_partial_factorial_design orthogonal
@@ -125,7 +123,7 @@ def test_fetch_partial_factorial_design_value_error():
     with pytest.raises(Exception) as execinfo:
         fetch_partial_factorial_design("fake design")
 
-    assert str(execinfo.value) == "Please input a valid design. `fake design` not found."
+    assert "Please input a valid design. `fake design` not found." in str(execinfo.value)
 
 
 if __name__ == '__main__':

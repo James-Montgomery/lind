@@ -1,5 +1,8 @@
 """
-factorial: This module contains tools for designing factorial experiments.
+factorial: This module contains tools for designing factorial experiments. Full factorial
+experiments (where every combination of treatments is explored) and partial factorial (where only a
+fraction of combinations are explored). Partial factorial experiments are sometimes referred to as
+fractional factorial experiments.
 
 The factorial designs here are meant to yield balanced and orthogonal designs. An experimental
 design is orthogonal if the effects of any factor (i.e. factor A) balance out (sum to zero) across
@@ -16,8 +19,10 @@ parallel using proper randomization of cohort assignment.
 
 Recommended import style:
 >>> from lind.design import factorial
+
 """
-import os
+
+from os.path import dirname, abspath
 import logging
 from typing import Union, List, Optional
 
@@ -29,6 +34,8 @@ from scipy.special import binom
 
 from pandas import DataFrame, read_csv
 from patsy import dmatrix  # pylint: disable=no-name-in-module
+
+from lind._utilities import _check_int_input
 
 # set logging
 logging.basicConfig(level=logging.INFO)
@@ -85,12 +92,14 @@ def design_full_factorial(factors: List[List],
     -------
     pd.DataFrame
 
-    Example
-    -------
+    Examples
+    --------
     >>> # create full factorial design for a 2 level 3 factor experiment
     >>> design_df = design_full_factorial(factors=[[-1, 1], [-1,1], [-1, 1]],
     >>>     factor_names=["factor_one", "factor_two", "factor_three"])
+
     """
+
     assert factor_names is None or len(factor_names) == len(factors), \
         "The length of factor_names must match the length of factors."
     factor_names = factor_names if factor_names is not None else \
@@ -116,20 +125,22 @@ def design_partial_factorial(k: int, res: int) -> DataFrame:
     For the 6 factor design 2**(6-p) with factors ABCDEF, example defining relations (I) are shown
     below. The resolution cannot exceed the number of factors in the experiment. So a 6 factor
     experiment can be at most a resolution 6 (otherwise it would be a full factorial experiment).
-    * Res I: I = A
-    * Res II: I = AB
-    * Res III: I = ABC
-    * Res IV: I = ABCD
-    * Res V: I = ABCDE
-    * Res VI: I = ABCDEF
+
+        * Res I: I = A
+        * Res II: I = AB
+        * Res III: I = ABC
+        * Res IV: I = ABCD
+        * Res V: I = ABCDE
+        * Res VI: I = ABCDEF
 
     Practically we tend to use resolution III-, IV- and V-designs.
-    * Res I: Cannot distinguish between levels within main effects (not useful).
-    * Res II: Main effects may be aliased with other main effects (not useful).
-    * Res III: Main effects may be aliased with two-way interactions.
-    * Res IV: Two-way interactions may be aliased with each other.
-    * Res V: Two-way interactions may be aliased with three-way interactions.
-    * Res VI: Three-way interactions may be aliased with each other.
+
+        * Res I: Cannot distinguish between levels within main effects (not useful).
+        * Res II: Main effects may be aliased with other main effects (not useful).
+        * Res III: Main effects may be aliased with two-way interactions.
+        * Res IV: Two-way interactions may be aliased with each other.
+        * Res V: Two-way interactions may be aliased with three-way interactions.
+        * Res VI: Three-way interactions may be aliased with each other.
 
     Parameters
     ----------
@@ -147,8 +158,11 @@ def design_partial_factorial(k: int, res: int) -> DataFrame:
     --------
     >>> # create partial factorial design for a 2 level 4 factor resolution III experiment
     >>> design_df = design_partial_factorial(k=4, res=3)
+
     """
 
+    _check_int_input(k, "k")
+    _check_int_input(res, "res")
     assert res <= k, "Resolution must be smaller than or equal to the number of factors."
 
     # Assume l=2 and use k specified by user to solve for p in design
@@ -219,27 +233,34 @@ def fetch_partial_factorial_design(design_name: str = "toc") -> DataFrame:
     pd.DataFrame
         experiment design or toc of available designs
 
-    References
-    ----------
-    * Section 5.3.3.4.7 of the Engineering Statistics Handbook by NIST
-    * Statistics For Experimentors by Box, Hunter, & Hunter
-    * Systems Of Experimental Design, VOL. 2 by Taguchi
-
     Examples
     --------
     >>> table_of_contents_of_designs = fetch_partial_factorial_design("toc")
     >>> design = fetch_partial_factorial_design("2**3-1")
+
+    References
+    ----------
+    NIST
+        * Section 5.3.3.4.7 of the Engineering Statistics Handbook
+    Box, Hunter, & Hunter
+        * Statistics For Experimentors
+    Taguchi
+        * Systems Of Experimental Design, VOL. 2
 
     Notes
     -----
     * 2**3-1 is equivalent to a Taguchi L4 design
     * 2**15-11 is equivalent to a Taguchi L16 design
     * 2**31-26 is equivalent to a Taguchi L32 design
+
     """
+
+    assert isinstance(design_name, str), "Input design_name must be a string."
     design_name = design_name.lower().strip() + ".csv"
-    path = os.path.dirname(os.path.abspath(__file__))
+    path = dirname(abspath(__file__))
     try:
-        return read_csv(path + "/static_designs/" + design_name, index_col=0)
+        return read_csv(path+"/static_designs/factorial/"+design_name, index_col=0)
     except FileNotFoundError as exception:
         logging.error(exception)
-        raise ValueError("Please input a valid design. `{}` not found.".format(design_name[:-4]))
+        raise ValueError("Please input a valid design. `{}` not found. "
+                         "See docstring for help.".format(design_name[:-4]))

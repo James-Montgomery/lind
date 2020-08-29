@@ -16,6 +16,9 @@ Recommended import style:
 
 TODO: There are parts of this code written by convenience that could be vectorized for increased
     speed. Will need to update code in the future to better optimize for speed.
+
+TODO: Add better docstrings to private utility functions
+
 """
 
 import logging
@@ -42,7 +45,7 @@ def _order(p_values: Union[List, ndarray], reverse: bool = False) -> Union[List,
 
 
 def _pminf(arr: Union[List, ndarray]) -> Union[List, ndarray]:
-    """ """
+    """utility"""
     n = len(arr)
     pmin_list = zeros(n)
     for i in range(n):
@@ -51,7 +54,7 @@ def _pminf(arr: Union[List, ndarray]) -> Union[List, ndarray]:
 
 
 def _cumminf(arr: Union[List, ndarray]) -> Union[List, ndarray]:
-    """ """
+    """utility"""
     cummin = zeros(len(arr))
     cumulative_min = arr[0]
     for i, p in enumerate(arr):
@@ -62,7 +65,7 @@ def _cumminf(arr: Union[List, ndarray]) -> Union[List, ndarray]:
 
 
 def _cummaxf(arr: Union[List, ndarray]) -> Union[List, ndarray]:
-    """ """
+    """utility"""
     cummax = zeros(len(arr))
     cumulative_max = arr[0]
     for i, e in enumerate(arr):
@@ -94,11 +97,18 @@ def bh(p_values: Union[List, ndarray]) -> ndarray:
     ndarray[float]
         the q values for the respective p value inputs
 
+    Examples
+    --------
+    >>> q_values = bh([0.05, 0.002, 0.006])
+
     References
     ----------
-    * Controlling the false discovery rate: a practical and powerful approach to multiple testing.
-        by Benjamini and Hochberg
+    Benjamini and Hochberg
+        * Controlling the false discovery rate: a practical and powerful approach to multiple
+          testing
+
     """
+
     n = len(p_values)
     cummin_input = zeros(n)
     reverse_p_value_order = _order(p_values, True)
@@ -127,11 +137,17 @@ def by(p_values: Union[List, ndarray]) -> ndarray:
     ndarray[float]
         the q values for the respective p value inputs
 
+    Examples
+    --------
+    >>> q_values = by([0.05, 0.002, 0.006])
+
     References
     ----------
-    * The control of the false discovery rate in multiple testing under dependency.
-        by Benjamini and Yekutieli
+    Benjamini and Yekutieli
+        * The control of the false discovery rate in multiple testing under dependency.
+
     """
+
     n = len(p_values)
     cummin_input = zeros(n)
     reverse_p_value_order = _order(p_values, True)
@@ -163,11 +179,19 @@ def bonferonni(p_values: Union[List, ndarray]) -> ndarray:
     ndarray[float]
         the q values for the respective p value inputs
 
+    Examples
+    --------
+    >>> q_values = bonferonni([0.05, 0.002, 0.006])
+
     References
     ----------
-    * Teoria statistica delle classi e calcolo delle probabilità by Bonferroni
-    * Multiple Hypothesis Testing by Shaffer
+    Bonferroni
+        * Teoria statistica delle classi e calcolo delle probabilità
+    Shaffer
+        * Multiple Hypothesis Testing
+
     """
+
     return clip(asarray(p_values)*len(p_values), 0.0, 1.0)
 
 
@@ -189,10 +213,17 @@ def holm(p_values: Union[List, ndarray]) -> ndarray:
     ndarray[float]
         the q values for the respective p value inputs
 
+    Examples
+    --------
+    >>> q_values = holm([0.05, 0.002, 0.006])
+
     References
     ----------
-    * A simple sequentially rejective multiple test procedure by Holm
+    Holm
+        * A simple sequentially rejective multiple test procedure
+
     """
+
     n = len(p_values)
     p_value_order = _order(p_values, False)
     cummax_input = zeros(n)
@@ -221,14 +252,21 @@ def hommel(p_values: Union[List, ndarray]) -> ndarray:
     ndarray[float]
         the q values for the respective p value inputs
 
+    Examples
+    --------
+    >>> q_values = hommel([0.05, 0.002, 0.006])
+
     References
     ----------
-    * A stagewise rejective multiple test procedure based on a modified Bonferroni test by Hommel
-    * Some probability inequalities for ordered MTP2 random variables: a proof of Simes conjecture
-        by Sarkar
-    * The Simes method for multiple hypothesis testing with positively dependent test statistics
-        by Sarkar
+    Hommel
+        * A stagewise rejective multiple test procedure based on a modified Bonferroni test
+    Sarkar
+        * Some probability inequalities for ordered MTP2 random variables: a proof of Simes
+          conjecture
+        * The Simes method for multiple hypothesis testing with positively dependent test statistics
+
     """
+
     n = len(p_values)
     o = _order(p_values, False)
     p = [p_values[index] for index in o]
@@ -291,14 +329,21 @@ def hochberg(p_values: Union[List, ndarray]) -> ndarray:
     ndarray[float]
         the q values for the respective p value inputs
 
+    Examples
+    --------
+    >>> q_values = hochberg([0.05, 0.002, 0.006])
+
     References
     ----------
-    * A sharper Bonferroni procedure for multiple tests of significance by Hochberg
-    * Some probability inequalities for ordered MTP2 random variables: a proof of Simes conjecture
-        by Sarkar
-    * The Simes method for multiple hypothesis testing with positively dependent test statistics
-        by Sarkar
+    Hochberg
+        A sharper Bonferroni procedure for multiple tests of significance by
+    Sarkar
+        * Some probability inequalities for ordered MTP2 random variables: a proof of Simes
+          conjecture
+        * The Simes method for multiple hypothesis testing with positively dependent test statistics
+
     """
+
     n = len(p_values)
     reverse_p_values_order = _order(p_values, True)
     cummin_input = zeros(n)

@@ -173,9 +173,113 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-lind.design.box_behnken">
+<span id="lind-design-box-behnken-module"></span><h2>lind.design.box_behnken module<a class="headerlink" href="#module-lind.design.box_behnken" title="Permalink to this headline">¶</a></h2>
+<p>TODO: add module</p>
+</div>
+<div class="section" id="module-lind.design.box_wilson">
+<span id="lind-design-box-wilson-module"></span><h2>lind.design.box_wilson module<a class="headerlink" href="#module-lind.design.box_wilson" title="Permalink to this headline">¶</a></h2>
+<p>box_wilson: Box-Wilson experiment designs, sometimes referred to as Central-Composite Designs
+(CCDs), are useful for measuring quadratic effects.</p>
+<p>Linear effects are typically measured using 2 level factorial or 2 level Plackett-Burman
+experiments. However, if the relationship between treatments and response are quadratic, more than
+2 levels may be required to accurately represent the response surface of the experiment.</p>
+<p>CCDs allow experimenters to model quadratic response surfaces without implementing full 3 level
+factorial experiments. CCD designs consist of three “runs”: A) a factorial experiment (sometimes
+fractional in design) B) a set of center points, experimental runs whose values of each factor are
+the medians of the values used in the factorial portion C) a set of axial points, experimental runs
+identical to the centre points except for one factor, which will take on values both below and
+above the median of the two factorial levels.</p>
+<div class="line-block">
+<div class="line">A) corner points (defined by the factorial design or matrix_f)</div>
+<div class="line">B) center points (defined by the matrix_c)</div>
+<div class="line">C) axial points (defined by the matrix_e)</div>
+</div>
+<p>Axial points are sometimes referred to as star points.</p>
+<p>If the distance from the center of the design space to a factorial point is 1 unit for each
+factor, the distance from the center of the design space to a star point is <a href="#id1"><span class="problematic" id="id2">|alpha|</span></a> &gt; 1. The
+precise value of alpha depends on the variables center, alpha_design, and face_design.</p>
+<p>In rare cases (i.e. k=2) a design can be orthogonal and rotatable. However, this is only
+true in a vary limited number of cases. See the example below:
+&gt;&gt;&gt; design_box_wilson(k=2, alpha_design=”orthogonal”, center=(1,1), face_design=”CCC”)
+&gt;&gt;&gt; design_box_wilson(k=2, alpha_design=”rotatable”, center=(1,1), face_design=”CCC”)</p>
+<dl class="function">
+<dt id="lind.design.box_wilson.design_box_wilson">
+<code class="sig-prename descclassname">lind.design.box_wilson.</code><code class="sig-name descname">design_box_wilson</code><span class="sig-paren">(</span><em class="sig-param">k: int</em>, <em class="sig-param">alpha_design: Optional[str] = 'rotatable'</em>, <em class="sig-param">center: Optional[Tuple[int</em>, <em class="sig-param">int]] = (1</em>, <em class="sig-param">1)</em>, <em class="sig-param">face_design: Optional[str] = 'CCC'</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.box_wilson.design_box_wilson" title="Permalink to this definition">¶</a></dt>
+<dd><p>boc_wilson: Central Composite Design (CCD)</p>
+<p>A CCD design contains an embedded factorial design with center points
+that are augmented with a group of ‘star points’ that allow estimation of curvature useful for
+estimating quadratic relationships.</p>
+<p>CCD designs can use facing options: CCC (Circumscribed), CCI (Inscribed), and
+CCF (Face Centered).</p>
+<p>CCC designs are the original form of the central composite design. The star points are at some
+distance alpha from the center based on the properties desired for the design and the number of
+factors in the design. The star points establish new extremes for the low and high settings for
+all factors. These designs have circular, spherical, or hyperspherical symmetry and require 5
+levels for each factor. Augmenting an existing factorial or resolution V fractional factorial
+design with star points can produce this design.</p>
+<p>CCI is useful in situations where the limits specified for factor settings are truly limits, the
+CCI design uses the factor settings as the star points and creates a factorial design within
+those limits (in other words, a CCI design is a scaled down CCC design with each factor level of
+the CCC design divided by alpha to generate the CCI design). This design also requires 5 levels
+of each factor. CCI designs can use partial factorial designs for matrix_f. This is not
+supported here.</p>
+<p>CCF design star points are at the center of each face of the factorial space, so alpha=1. This
+requires 3 levels of each factor. Augmenting an existing factorial or resolution V design with
+appropriate star points can also produce this design.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<em>int</em>) – the total number of factors considered in the design</p></li>
+<li><p><strong>alpha_design</strong> (<em>str, optional</em>) – The method of calculating the distance alpha. Available options: <cite>orthogonal</cite>, <cite>rotatable</cite>;
+Just like MATLAB ccdesign, <cite>rotatable</cite> is the default</p></li>
+<li><p><strong>center</strong> (<em>Tuple[int, int], optional</em>) – the first value of the tuple is the factorial center point, the second value of the tuple
+is the axial center point; default value is (1, 1)</p></li>
+<li><p><strong>face_design</strong> (<em>str, optional</em>) – this input determines the symmetry / geometric of the design; valid options are: <cite>CCC</cite>,
+<cite>CCF</cite>, and <cite>CCI</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the box-wilson experimental design</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">design</span> <span class="o">=</span> <span class="n">design_box_wilson</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha_design</span><span class="o">=</span><span class="s2">&quot;rotatable&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">face_design</span><span class="o">=</span><span class="s2">&quot;CCC&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>NIST</dt><dd><ul class="simple">
+<li><p>Section 5.3.3.6.1 of the Engineering Statistics Handbook</p></li>
+</ul>
+</dd>
+<dt>Myers</dt><dd><ul class="simple">
+<li><p>Response Surface Methodology (1971)</p></li>
+</ul>
+</dd>
+<dt>Box and Wilson</dt><dd><ul class="simple">
+<li><p>On the Experimental Attainment of Optimum Conditions (1951)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>When face_design=`CCF` the alpha_design argument is ignored and alpha is set to 1.</p></li>
+<li><p>Popular CCD designs are orthogonal (OCCD), rotatable (RCCD), face (FCC), spherical (SCCD),
+and Slope Rotatable (Slope-R); of these only the first three are supported</p></li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="module-lind.design.factorial">
 <span id="lind-design-factorial-module"></span><h2>lind.design.factorial module<a class="headerlink" href="#module-lind.design.factorial" title="Permalink to this headline">¶</a></h2>
-<p>factorial: This module contains tools for designing factorial experiments.</p>
+<p>factorial: This module contains tools for designing factorial experiments. Full factorial
+experiments (where every combination of treatments is explored) and partial factorial (where only a
+fraction of combinations are explored). Partial factorial experiments are sometimes referred to as
+fractional factorial experiments.</p>
 <p>The factorial designs here are meant to yield balanced and orthogonal designs. An experimental
 design is orthogonal if the effects of any factor (i.e. factor A) balance out (sum to zero) across
 the effects of the other factors (i.e. factors B and C). In other words, if A is orthogonal to B
@@ -209,7 +313,7 @@ argument.</p></li>
 <dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
-<p class="rubric">Example</p>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># create full factorial design for a 2 level 3 factor experiment</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">design_df</span> <span class="o">=</span> <span class="n">design_full_factorial</span><span class="p">(</span><span class="n">factors</span><span class="o">=</span><span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">factor_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;factor_one&quot;</span><span class="p">,</span> <span class="s2">&quot;factor_two&quot;</span><span class="p">,</span> <span class="s2">&quot;factor_three&quot;</span><span class="p">])</span>
@@ -231,20 +335,28 @@ aliasing (confounding).</p>
 <p>Resolution number is determined through the defining relation of the partial factorial design.
 For the 6 factor design 2**(6-p) with factors ABCDEF, example defining relations (I) are shown
 below. The resolution cannot exceed the number of factors in the experiment. So a 6 factor
-experiment can be at most a resolution 6 (otherwise it would be a full factorial experiment).
-* Res I: I = A
-* Res II: I = AB
-* Res III: I = ABC
-* Res IV: I = ABCD
-* Res V: I = ABCDE
-* Res VI: I = ABCDEF</p>
-<p>Practically we tend to use resolution III-, IV- and V-designs.
-* Res I: Cannot distinguish between levels within main effects (not useful).
-* Res II: Main effects may be aliased with other main effects (not useful).
-* Res III: Main effects may be aliased with two-way interactions.
-* Res IV: Two-way interactions may be aliased with each other.
-* Res V: Two-way interactions may be aliased with three-way interactions.
-* Res VI: Three-way interactions may be aliased with each other.</p>
+experiment can be at most a resolution 6 (otherwise it would be a full factorial experiment).</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Res I: I = A</p></li>
+<li><p>Res II: I = AB</p></li>
+<li><p>Res III: I = ABC</p></li>
+<li><p>Res IV: I = ABCD</p></li>
+<li><p>Res V: I = ABCDE</p></li>
+<li><p>Res VI: I = ABCDEF</p></li>
+</ul>
+</div></blockquote>
+<p>Practically we tend to use resolution III-, IV- and V-designs.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Res I: Cannot distinguish between levels within main effects (not useful).</p></li>
+<li><p>Res II: Main effects may be aliased with other main effects (not useful).</p></li>
+<li><p>Res III: Main effects may be aliased with two-way interactions.</p></li>
+<li><p>Res IV: Two-way interactions may be aliased with each other.</p></li>
+<li><p>Res V: Two-way interactions may be aliased with three-way interactions.</p></li>
+<li><p>Res VI: Three-way interactions may be aliased with each other.</p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -288,23 +400,89 @@ if the user would like to work it out on their own.</p>
 <dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
-<p class="rubric">References</p>
-<ul class="simple">
-<li><p>Section 5.3.3.4.7 of the Engineering Statistics Handbook by NIST</p></li>
-<li><p>Statistics For Experimentors by Box, Hunter, &amp; Hunter</p></li>
-<li><p>Systems Of Experimental Design, VOL. 2 by Taguchi</p></li>
-</ul>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table_of_contents_of_designs</span> <span class="o">=</span> <span class="n">fetch_partial_factorial_design</span><span class="p">(</span><span class="s2">&quot;toc&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">design</span> <span class="o">=</span> <span class="n">fetch_partial_factorial_design</span><span class="p">(</span><span class="s2">&quot;2**3-1&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>NIST</dt><dd><ul class="simple">
+<li><p>Section 5.3.3.4.7 of the Engineering Statistics Handbook</p></li>
+</ul>
+</dd>
+<dt>Box, Hunter, &amp; Hunter</dt><dd><ul class="simple">
+<li><p>Statistics For Experimentors</p></li>
+</ul>
+</dd>
+<dt>Taguchi</dt><dd><ul class="simple">
+<li><p>Systems Of Experimental Design, VOL. 2</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <ul class="simple">
 <li><p>2**3-1 is equivalent to a Taguchi L4 design</p></li>
 <li><p>2**15-11 is equivalent to a Taguchi L16 design</p></li>
 <li><p>2**31-26 is equivalent to a Taguchi L32 design</p></li>
 </ul>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lind.design.latin_hyper_cube">
+<span id="lind-design-latin-hyper-cube-module"></span><h2>lind.design.latin_hyper_cube module<a class="headerlink" href="#module-lind.design.latin_hyper_cube" title="Permalink to this headline">¶</a></h2>
+<p>TODO: add module</p>
+</div>
+<div class="section" id="module-lind.design.plackett_burman">
+<span id="lind-design-plackett-burman-module"></span><h2>lind.design.plackett_burman module<a class="headerlink" href="#module-lind.design.plackett_burman" title="Permalink to this headline">¶</a></h2>
+<p>plackett_burman: This module contains tools for designing Plackett-Burman experiments.</p>
+<p>Plackett and Burman generated sets of useful 2 level experimental designs using a method Raymond
+Paley identified in 1933. This method generated orthogonal matrices with elements (1, -1). Paley’s
+method could be used to find such matrices of size N for most N equal to a multiple of 4
+(all such N up to 100 except N = 92). This gave Plackett and Burman the interesting quality that
+they only increase the number of rows (require runs) in the experiment for every 4 factors added to
+the design.</p>
+<p>Plackett and Burman are structured so that each combination of levels for any pair of factors
+appears the same number of times, throughout all the experimental runs.</p>
+<p>These designs achieved orthogonality with many fewer runs than a full factorial design. When N is
+a power of 2 then a Plackett and Burman design is equivalent to a partial factorial resolution III
+design. All Plackett and Burman designs assume negligible interaction effects relative to main
+effects.</p>
+<p>Plackett and Burman do mention designs with more then 2 levels (a rediscovery of methods invented
+by Raj Chandra Bose and K. Kishen), however these are rarely used in practice.</p>
+<p>Recommended import style:
+&gt;&gt;&gt; from lind.design import plackett_burman as pb</p>
+<dl class="function">
+<dt id="lind.design.plackett_burman.fetch_plackett_burman_design">
+<code class="sig-prename descclassname">lind.design.plackett_burman.</code><code class="sig-name descname">fetch_plackett_burman_design</code><span class="sig-paren">(</span><em class="sig-param">num_factors: int</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.plackett_burman.fetch_plackett_burman_design" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function helps create Plackett-Burman experimental designs. Plackett-Burman designs are
+very efficient screening designs when only main effects are of interest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num_factors</strong> (<em>int</em>) – the number of factors in the design. Currently only supports up to 47 factors per design.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>experiment design or toc of available designs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">design</span> <span class="o">=</span> <span class="n">fetch_plackett_burman_design</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>NIST</dt><dd><ul class="simple">
+<li><p>Section 5.3.3.5 of the Engineering Statistics Handbook</p></li>
+</ul>
+</dd>
+<dt>Plackett and Burman</dt><dd><ul class="simple">
+<li><p>The Design of Optimum Multifactorial Experiments</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

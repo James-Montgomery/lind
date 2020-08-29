@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
+    <title>Coverage for lind/design/box_wilson.py: 95%</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="jquery.isonscreen.js"></script>
+    <script type="text/javascript" src="coverage_html.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(coverage.pyfile_ready);
+    </script>
+</head>
+<body class="pyfile">
+<div id="header">
+    <div class="content">
+        <h1>Coverage for <b>lind/design/box_wilson.py</b> :
+            <span class="pc_cov">95%</span>
+        </h1>
+        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+        <h2 class="stats">
+            41 statements &nbsp;
+            <span class="run shortkey_r button_toggle_run">39 run</span>
+            <span class="mis show_mis shortkey_m button_toggle_mis">2 missing</span>
+            <span class="exc show_exc shortkey_x button_toggle_exc">0 excluded</span>
+        </h2>
+    </div>
+</div>
+<div class="help_panel">
+    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
+    <p class="legend">Hot-keys on this page</p>
+    <div>
+    <p class="keyhelp">
+        <span class="key">r</span>
+        <span class="key">m</span>
+        <span class="key">x</span>
+        <span class="key">p</span> &nbsp; toggle line displays
+    </p>
+    <p class="keyhelp">
+        <span class="key">j</span>
+        <span class="key">k</span> &nbsp; next/prev highlighted chunk
+    </p>
+    <p class="keyhelp">
+        <span class="key">0</span> &nbsp; (zero) top of page
+    </p>
+    <p class="keyhelp">
+        <span class="key">1</span> &nbsp; (one) first highlighted chunk
+    </p>
+    </div>
+</div>
+<div id="source">
+    <p id="t1" class="pln"><span class="n"><a href="#t1">1</a></span><span class="t"><span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t2" class="pln"><span class="n"><a href="#t2">2</a></span><span class="t"><span class="str">box_wilson: Box-Wilson experiment designs, sometimes referred to as Central-Composite Designs</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t3" class="pln"><span class="n"><a href="#t3">3</a></span><span class="t"><span class="str">(CCDs), are useful for measuring quadratic effects.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t4" class="pln"><span class="n"><a href="#t4">4</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t5" class="pln"><span class="n"><a href="#t5">5</a></span><span class="t"><span class="str">Linear effects are typically measured using 2 level factorial or 2 level Plackett-Burman</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t6" class="pln"><span class="n"><a href="#t6">6</a></span><span class="t"><span class="str">experiments. However, if the relationship between treatments and response are quadratic, more than</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t7" class="pln"><span class="n"><a href="#t7">7</a></span><span class="t"><span class="str">2 levels may be required to accurately represent the response surface of the experiment.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t8" class="pln"><span class="n"><a href="#t8">8</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t9" class="pln"><span class="n"><a href="#t9">9</a></span><span class="t"><span class="str">CCDs allow experimenters to model quadratic response surfaces without implementing full 3 level</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t10" class="pln"><span class="n"><a href="#t10">10</a></span><span class="t"><span class="str">factorial experiments. CCD designs consist of three "runs": A) a factorial experiment (sometimes</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t11" class="pln"><span class="n"><a href="#t11">11</a></span><span class="t"><span class="str">fractional in design) B) a set of center points, experimental runs whose values of each factor are</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t12" class="pln"><span class="n"><a href="#t12">12</a></span><span class="t"><span class="str">the medians of the values used in the factorial portion C) a set of axial points, experimental runs</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t13" class="pln"><span class="n"><a href="#t13">13</a></span><span class="t"><span class="str">identical to the centre points except for one factor, which will take on values both below and</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t14" class="pln"><span class="n"><a href="#t14">14</a></span><span class="t"><span class="str">above the median of the two factorial levels.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t15" class="pln"><span class="n"><a href="#t15">15</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t16" class="pln"><span class="n"><a href="#t16">16</a></span><span class="t"><span class="str">| A) corner points (defined by the factorial design or matrix_f)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t17" class="pln"><span class="n"><a href="#t17">17</a></span><span class="t"><span class="str">| B) center points (defined by the matrix_c)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t18" class="pln"><span class="n"><a href="#t18">18</a></span><span class="t"><span class="str">| C) axial points (defined by the matrix_e)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t19" class="pln"><span class="n"><a href="#t19">19</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t20" class="pln"><span class="n"><a href="#t20">20</a></span><span class="t"><span class="str">Axial points are sometimes referred to as star points.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t21" class="pln"><span class="n"><a href="#t21">21</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t22" class="pln"><span class="n"><a href="#t22">22</a></span><span class="t"><span class="str">If the distance from the center of the design space to a factorial point is 1 unit for each</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t23" class="pln"><span class="n"><a href="#t23">23</a></span><span class="t"><span class="str">factor, the distance from the center of the design space to a star point is |alpha| > 1. The</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t24" class="pln"><span class="n"><a href="#t24">24</a></span><span class="t"><span class="str">precise value of alpha depends on the variables center, alpha_design, and face_design.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t25" class="pln"><span class="n"><a href="#t25">25</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t26" class="pln"><span class="n"><a href="#t26">26</a></span><span class="t"><span class="str">In rare cases (i.e. k=2) a design can be orthogonal and rotatable. However, this is only</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t27" class="pln"><span class="n"><a href="#t27">27</a></span><span class="t"><span class="str">true in a vary limited number of cases. See the example below:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t28" class="pln"><span class="n"><a href="#t28">28</a></span><span class="t"><span class="str">>>> design_box_wilson(k=2, alpha_design="orthogonal", center=(1,1), face_design="CCC")</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="pln"><span class="n"><a href="#t29">29</a></span><span class="t"><span class="str">>>> design_box_wilson(k=2, alpha_design="rotatable", center=(1,1), face_design="CCC")</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t30" class="pln"><span class="n"><a href="#t30">30</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t31" class="pln"><span class="n"><a href="#t31">31</a></span><span class="t"><span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t32" class="pln"><span class="n"><a href="#t32">32</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t33" class="run"><span class="n"><a href="#t33">33</a></span><span class="t"><span class="key">import</span> <span class="nam">logging</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t34" class="run"><span class="n"><a href="#t34">34</a></span><span class="t"><span class="key">from</span> <span class="nam">typing</span> <span class="key">import</span> <span class="nam">Optional</span><span class="op">,</span> <span class="nam">Tuple</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t35" class="pln"><span class="n"><a href="#t35">35</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t36" class="run"><span class="n"><a href="#t36">36</a></span><span class="t"><span class="key">from</span> <span class="nam">numpy</span> <span class="key">import</span> <span class="nam">zeros</span><span class="op">,</span> <span class="nam">ndarray</span><span class="op">,</span> <span class="nam">r_</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t37" class="run"><span class="n"><a href="#t37">37</a></span><span class="t"><span class="key">from</span> <span class="nam">pandas</span> <span class="key">import</span> <span class="nam">DataFrame</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t38" class="pln"><span class="n"><a href="#t38">38</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t39" class="run"><span class="n"><a href="#t39">39</a></span><span class="t"><span class="key">from</span> <span class="nam">lind</span><span class="op">.</span><span class="nam">design</span><span class="op">.</span><span class="nam">factorial</span> <span class="key">import</span> <span class="nam">design_full_factorial</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t40" class="run"><span class="n"><a href="#t40">40</a></span><span class="t"><span class="key">from</span> <span class="nam">lind</span><span class="op">.</span><span class="nam">_utilities</span> <span class="key">import</span> <span class="nam">_check_int_input</span><span class="op">,</span> <span class="nam">_check_str_input</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t41" class="pln"><span class="n"><a href="#t41">41</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t42" class="pln"><span class="n"><a href="#t42">42</a></span><span class="t"><span class="com"># set logging</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t43" class="run"><span class="n"><a href="#t43">43</a></span><span class="t"><span class="nam">logging</span><span class="op">.</span><span class="nam">basicConfig</span><span class="op">(</span><span class="nam">level</span><span class="op">=</span><span class="nam">logging</span><span class="op">.</span><span class="nam">INFO</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t44" class="run"><span class="n"><a href="#t44">44</a></span><span class="t"><span class="nam">logger</span> <span class="op">=</span> <span class="nam">logging</span><span class="op">.</span><span class="nam">getLogger</span><span class="op">(</span><span class="nam">__name__</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t45" class="pln"><span class="n"><a href="#t45">45</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t46" class="pln"><span class="n"><a href="#t46">46</a></span><span class="t"><span class="com"># define public functions (ignored by jupyter notebooks)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t47" class="run"><span class="n"><a href="#t47">47</a></span><span class="t"><span class="nam">__all__</span> <span class="op">=</span> <span class="op">[</span><span class="str">"design_box_wilson"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t48" class="pln"><span class="n"><a href="#t48">48</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t49" class="pln"><span class="n"><a href="#t49">49</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t50" class="pln"><span class="n"><a href="#t50">50</a></span><span class="t"><span class="com">####################################################################################################</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t51" class="pln"><span class="n"><a href="#t51">51</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t52" class="pln"><span class="n"><a href="#t52">52</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t53" class="run"><span class="n"><a href="#t53">53</a></span><span class="t"><span class="key">def</span> <span class="nam">_get_alpha</span><span class="op">(</span><span class="nam">num_factors</span><span class="op">:</span> <span class="nam">int</span><span class="op">,</span> <span class="nam">alpha_design</span><span class="op">:</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">str</span><span class="op">]</span> <span class="op">=</span> <span class="key">None</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t54" class="pln"><span class="n"><a href="#t54">54</a></span><span class="t">               <span class="nam">center</span><span class="op">:</span> <span class="nam">Tuple</span><span class="op">[</span><span class="nam">int</span><span class="op">,</span> <span class="nam">int</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span><span class="num">1</span><span class="op">,</span> <span class="num">1</span><span class="op">)</span><span class="op">)</span> <span class="op">-></span> <span class="op">[</span><span class="nam">ndarray</span><span class="op">,</span> <span class="nam">float</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t55" class="pln"><span class="n"><a href="#t55">55</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t56" class="pln"><span class="n"><a href="#t56">56</a></span><span class="t"><span class="str">    Find the distance measure `alpha`</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t57" class="pln"><span class="n"><a href="#t57">57</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t58" class="pln"><span class="n"><a href="#t58">58</a></span><span class="t"><span class="str">    Notes</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t59" class="pln"><span class="n"><a href="#t59">59</a></span><span class="t"><span class="str">    -----</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t60" class="pln"><span class="n"><a href="#t60">60</a></span><span class="t"><span class="str">    * number of factorial points = 2.0**num_factors</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t61" class="pln"><span class="n"><a href="#t61">61</a></span><span class="t"><span class="str">    * number of axial points = 2*num_factors</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t62" class="pln"><span class="n"><a href="#t62">62</a></span><span class="t"><span class="str">    * factorial center position = center[0]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t63" class="pln"><span class="n"><a href="#t63">63</a></span><span class="t"><span class="str">    * axial center position = center[1]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t64" class="pln"><span class="n"><a href="#t64">64</a></span><span class="t"><span class="str">    * alpha is always 1 for CCF face_design (hence default behavior for alpha_design=None)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t65" class="pln"><span class="n"><a href="#t65">65</a></span><span class="t"><span class="str">    * CCDs always contain twice as many star points (axial points) as factors. The star points</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t66" class="pln"><span class="n"><a href="#t66">66</a></span><span class="t"><span class="str">      represent new extreme values (low and high) for each factor.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t67" class="pln"><span class="n"><a href="#t67">67</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t68" class="run"><span class="n"><a href="#t68">68</a></span><span class="t">    <span class="key">if</span> <span class="nam">alpha_design</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t69" class="mis show_mis"><span class="n"><a href="#t69">69</a></span><span class="t">        <span class="key">return</span> <span class="num">1.0</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t70" class="run"><span class="n"><a href="#t70">70</a></span><span class="t">    <span class="key">if</span> <span class="nam">alpha_design</span> <span class="op">==</span> <span class="str">'orthogonal'</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t71" class="pln"><span class="n"><a href="#t71">71</a></span><span class="t">        <span class="com"># see Response Surface Methodology by Raymond Myers (1971)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t72" class="run"><span class="n"><a href="#t72">72</a></span><span class="t">        <span class="key">return</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t73" class="pln"><span class="n"><a href="#t73">73</a></span><span class="t">            <span class="nam">num_factors</span> <span class="op">*</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t74" class="pln"><span class="n"><a href="#t74">74</a></span><span class="t">            <span class="op">(</span><span class="num">1.0</span> <span class="op">+</span> <span class="nam">center</span><span class="op">[</span><span class="num">1</span><span class="op">]</span> <span class="op">/</span> <span class="op">(</span><span class="num">2.0</span><span class="op">*</span><span class="nam">num_factors</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t75" class="pln"><span class="n"><a href="#t75">75</a></span><span class="t">            <span class="op">(</span><span class="num">1.0</span> <span class="op">+</span> <span class="nam">center</span><span class="op">[</span><span class="num">0</span><span class="op">]</span> <span class="op">/</span> <span class="op">(</span><span class="num">2.0</span><span class="op">**</span><span class="nam">num_factors</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t76" class="pln"><span class="n"><a href="#t76">76</a></span><span class="t">        <span class="op">)</span><span class="op">**</span><span class="num">0.5</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t77" class="run"><span class="n"><a href="#t77">77</a></span><span class="t">    <span class="key">if</span> <span class="nam">alpha_design</span> <span class="op">==</span> <span class="str">'rotatable'</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t78" class="pln"><span class="n"><a href="#t78">78</a></span><span class="t">        <span class="com"># see Section 5.3.3.6.1 of the Engineering Statistics Handbook for formula</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t79" class="run"><span class="n"><a href="#t79">79</a></span><span class="t">        <span class="key">return</span> <span class="op">(</span><span class="num">2.0</span><span class="op">**</span><span class="nam">num_factors</span><span class="op">)</span><span class="op">**</span><span class="num">0.25</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t80" class="mis show_mis"><span class="n"><a href="#t80">80</a></span><span class="t">    <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"Invalid value for alpha_design: {}"</span><span class="op">.</span><span class="nam">format</span><span class="op">(</span><span class="nam">alpha_design</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t81" class="pln"><span class="n"><a href="#t81">81</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t82" class="pln"><span class="n"><a href="#t82">82</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t83" class="run"><span class="n"><a href="#t83">83</a></span><span class="t"><span class="key">def</span> <span class="nam">_get_matrix_f</span><span class="op">(</span><span class="nam">num_factors</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t84" class="pln"><span class="n"><a href="#t84">84</a></span><span class="t">    <span class="str">"""2 level full factorial experiment design defines the matrix_f"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t85" class="run"><span class="n"><a href="#t85">85</a></span><span class="t">    <span class="key">return</span> <span class="nam">design_full_factorial</span><span class="op">(</span><span class="op">[</span><span class="op">[</span><span class="op">-</span><span class="num">1</span><span class="op">,</span> <span class="num">1</span><span class="op">]</span> <span class="key">for</span> <span class="nam">_</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="nam">num_factors</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">.</span><span class="nam">values</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t86" class="pln"><span class="n"><a href="#t86">86</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t87" class="pln"><span class="n"><a href="#t87">87</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t88" class="run"><span class="n"><a href="#t88">88</a></span><span class="t"><span class="key">def</span> <span class="nam">_get_matrix_c</span><span class="op">(</span><span class="nam">num_factors</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t89" class="pln"><span class="n"><a href="#t89">89</a></span><span class="t">    <span class="str">"""Generate the center point matrix"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t90" class="run"><span class="n"><a href="#t90">90</a></span><span class="t">    <span class="nam">matrix_c</span> <span class="op">=</span> <span class="nam">zeros</span><span class="op">(</span><span class="op">(</span><span class="num">2</span><span class="op">*</span><span class="nam">num_factors</span><span class="op">,</span> <span class="nam">num_factors</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t91" class="run"><span class="n"><a href="#t91">91</a></span><span class="t">    <span class="key">for</span> <span class="nam">i</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="nam">num_factors</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t92" class="run"><span class="n"><a href="#t92">92</a></span><span class="t">        <span class="nam">matrix_c</span><span class="op">[</span><span class="num">2</span><span class="op">*</span><span class="nam">i</span><span class="op">:</span><span class="num">2</span><span class="op">*</span><span class="nam">i</span><span class="op">+</span><span class="num">2</span><span class="op">,</span> <span class="nam">i</span><span class="op">]</span> <span class="op">=</span> <span class="op">[</span><span class="op">-</span><span class="num">1</span><span class="op">,</span> <span class="num">1</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t93" class="run"><span class="n"><a href="#t93">93</a></span><span class="t">    <span class="key">return</span> <span class="nam">matrix_c</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t94" class="pln"><span class="n"><a href="#t94">94</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t95" class="pln"><span class="n"><a href="#t95">95</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t96" class="pln"><span class="n"><a href="#t96">96</a></span><span class="t"><span class="com">####################################################################################################</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t97" class="pln"><span class="n"><a href="#t97">97</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t98" class="pln"><span class="n"><a href="#t98">98</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t99" class="run"><span class="n"><a href="#t99">99</a></span><span class="t"><span class="key">def</span> <span class="nam">design_box_wilson</span><span class="op">(</span><span class="nam">k</span><span class="op">:</span> <span class="nam">int</span><span class="op">,</span> <span class="nam">alpha_design</span><span class="op">:</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">str</span><span class="op">]</span> <span class="op">=</span> <span class="str">"rotatable"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t100" class="pln"><span class="n"><a href="#t100">100</a></span><span class="t">                      <span class="nam">center</span><span class="op">:</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">Tuple</span><span class="op">[</span><span class="nam">int</span><span class="op">,</span> <span class="nam">int</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span><span class="num">1</span><span class="op">,</span> <span class="num">1</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t101" class="pln"><span class="n"><a href="#t101">101</a></span><span class="t">                      <span class="nam">face_design</span><span class="op">:</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">str</span><span class="op">]</span> <span class="op">=</span> <span class="str">"CCC"</span><span class="op">)</span> <span class="op">-></span> <span class="nam">DataFrame</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t102" class="pln"><span class="n"><a href="#t102">102</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t103" class="pln"><span class="n"><a href="#t103">103</a></span><span class="t"><span class="str">    boc_wilson: Central Composite Design (CCD)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t104" class="pln"><span class="n"><a href="#t104">104</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t"><span class="str">    A CCD design contains an embedded factorial design with center points</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t106" class="pln"><span class="n"><a href="#t106">106</a></span><span class="t"><span class="str">    that are augmented with a group of 'star points' that allow estimation of curvature useful for</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t107" class="pln"><span class="n"><a href="#t107">107</a></span><span class="t"><span class="str">    estimating quadratic relationships.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t108" class="pln"><span class="n"><a href="#t108">108</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t109" class="pln"><span class="n"><a href="#t109">109</a></span><span class="t"><span class="str">    CCD designs can use facing options: CCC (Circumscribed), CCI (Inscribed), and</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t110" class="pln"><span class="n"><a href="#t110">110</a></span><span class="t"><span class="str">    CCF (Face Centered).</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t111" class="pln"><span class="n"><a href="#t111">111</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t112" class="pln"><span class="n"><a href="#t112">112</a></span><span class="t"><span class="str">    CCC designs are the original form of the central composite design. The star points are at some</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t113" class="pln"><span class="n"><a href="#t113">113</a></span><span class="t"><span class="str">    distance alpha from the center based on the properties desired for the design and the number of</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t114" class="pln"><span class="n"><a href="#t114">114</a></span><span class="t"><span class="str">    factors in the design. The star points establish new extremes for the low and high settings for</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t115" class="pln"><span class="n"><a href="#t115">115</a></span><span class="t"><span class="str">    all factors. These designs have circular, spherical, or hyperspherical symmetry and require 5</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t116" class="pln"><span class="n"><a href="#t116">116</a></span><span class="t"><span class="str">    levels for each factor. Augmenting an existing factorial or resolution V fractional factorial</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t117" class="pln"><span class="n"><a href="#t117">117</a></span><span class="t"><span class="str">    design with star points can produce this design.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t118" class="pln"><span class="n"><a href="#t118">118</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t119" class="pln"><span class="n"><a href="#t119">119</a></span><span class="t"><span class="str">    CCI is useful in situations where the limits specified for factor settings are truly limits, the</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t120" class="pln"><span class="n"><a href="#t120">120</a></span><span class="t"><span class="str">    CCI design uses the factor settings as the star points and creates a factorial design within</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t121" class="pln"><span class="n"><a href="#t121">121</a></span><span class="t"><span class="str">    those limits (in other words, a CCI design is a scaled down CCC design with each factor level of</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t122" class="pln"><span class="n"><a href="#t122">122</a></span><span class="t"><span class="str">    the CCC design divided by alpha to generate the CCI design). This design also requires 5 levels</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t123" class="pln"><span class="n"><a href="#t123">123</a></span><span class="t"><span class="str">    of each factor. CCI designs can use partial factorial designs for matrix_f. This is not</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t124" class="pln"><span class="n"><a href="#t124">124</a></span><span class="t"><span class="str">    supported here.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t125" class="pln"><span class="n"><a href="#t125">125</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t126" class="pln"><span class="n"><a href="#t126">126</a></span><span class="t"><span class="str">    CCF design star points are at the center of each face of the factorial space, so alpha=1. This</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t127" class="pln"><span class="n"><a href="#t127">127</a></span><span class="t"><span class="str">    requires 3 levels of each factor. Augmenting an existing factorial or resolution V design with</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t128" class="pln"><span class="n"><a href="#t128">128</a></span><span class="t"><span class="str">    appropriate star points can also produce this design.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t129" class="pln"><span class="n"><a href="#t129">129</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t130" class="pln"><span class="n"><a href="#t130">130</a></span><span class="t"><span class="str">    Parameters</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t131" class="pln"><span class="n"><a href="#t131">131</a></span><span class="t"><span class="str">    ----------</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t132" class="pln"><span class="n"><a href="#t132">132</a></span><span class="t"><span class="str">    k: int</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t133" class="pln"><span class="n"><a href="#t133">133</a></span><span class="t"><span class="str">        the total number of factors considered in the design</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t134" class="pln"><span class="n"><a href="#t134">134</a></span><span class="t"><span class="str">    alpha_design: str, optional</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t135" class="pln"><span class="n"><a href="#t135">135</a></span><span class="t"><span class="str">        The method of calculating the distance alpha. Available options: `orthogonal`, `rotatable`;</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t136" class="pln"><span class="n"><a href="#t136">136</a></span><span class="t"><span class="str">        Just like MATLAB ccdesign, `rotatable` is the default</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t137" class="pln"><span class="n"><a href="#t137">137</a></span><span class="t"><span class="str">    center: Tuple[int, int], optional</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t138" class="pln"><span class="n"><a href="#t138">138</a></span><span class="t"><span class="str">        the first value of the tuple is the factorial center point, the second value of the tuple</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t139" class="pln"><span class="n"><a href="#t139">139</a></span><span class="t"><span class="str">        is the axial center point; default value is (1, 1)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t140" class="pln"><span class="n"><a href="#t140">140</a></span><span class="t"><span class="str">    face_design: str, optional</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t141" class="pln"><span class="n"><a href="#t141">141</a></span><span class="t"><span class="str">        this input determines the symmetry / geometric of the design; valid options are: `CCC`,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t142" class="pln"><span class="n"><a href="#t142">142</a></span><span class="t"><span class="str">        `CCF`, and `CCI`</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t143" class="pln"><span class="n"><a href="#t143">143</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t144" class="pln"><span class="n"><a href="#t144">144</a></span><span class="t"><span class="str">    Returns</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t145" class="pln"><span class="n"><a href="#t145">145</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t146" class="pln"><span class="n"><a href="#t146">146</a></span><span class="t"><span class="str">    pd.DataFrame</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t147" class="pln"><span class="n"><a href="#t147">147</a></span><span class="t"><span class="str">        the box-wilson experimental design</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t148" class="pln"><span class="n"><a href="#t148">148</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t149" class="pln"><span class="n"><a href="#t149">149</a></span><span class="t"><span class="str">    Examples</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t150" class="pln"><span class="n"><a href="#t150">150</a></span><span class="t"><span class="str">    --------</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t151" class="pln"><span class="n"><a href="#t151">151</a></span><span class="t"><span class="str">    >>> design = design_box_wilson(k=2, alpha_design="rotatable", center=(1,1), face_design="CCC")</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t152" class="pln"><span class="n"><a href="#t152">152</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t153" class="pln"><span class="n"><a href="#t153">153</a></span><span class="t"><span class="str">    References</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t154" class="pln"><span class="n"><a href="#t154">154</a></span><span class="t"><span class="str">    ----------</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t155" class="pln"><span class="n"><a href="#t155">155</a></span><span class="t"><span class="str">    NIST</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t156" class="pln"><span class="n"><a href="#t156">156</a></span><span class="t"><span class="str">        * Section 5.3.3.6.1 of the Engineering Statistics Handbook</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t157" class="pln"><span class="n"><a href="#t157">157</a></span><span class="t"><span class="str">    Myers</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t158" class="pln"><span class="n"><a href="#t158">158</a></span><span class="t"><span class="str">        * Response Surface Methodology (1971)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t159" class="pln"><span class="n"><a href="#t159">159</a></span><span class="t"><span class="str">    Box and Wilson</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t160" class="pln"><span class="n"><a href="#t160">160</a></span><span class="t"><span class="str">        * On the Experimental Attainment of Optimum Conditions (1951)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t161" class="pln"><span class="n"><a href="#t161">161</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t162" class="pln"><span class="n"><a href="#t162">162</a></span><span class="t"><span class="str">    Notes</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t163" class="pln"><span class="n"><a href="#t163">163</a></span><span class="t"><span class="str">    -----</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t164" class="pln"><span class="n"><a href="#t164">164</a></span><span class="t"><span class="str">    * When face_design=`CCF` the alpha_design argument is ignored and alpha is set to 1.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t165" class="pln"><span class="n"><a href="#t165">165</a></span><span class="t"><span class="str">    * Popular CCD designs are orthogonal (OCCD), rotatable (RCCD), face (FCC), spherical (SCCD),</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t166" class="pln"><span class="n"><a href="#t166">166</a></span><span class="t"><span class="str">      and Slope Rotatable (Slope-R); of these only the first three are supported</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t167" class="pln"><span class="n"><a href="#t167">167</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t168" class="pln"><span class="n"><a href="#t168">168</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t169" class="pln"><span class="n"><a href="#t169">169</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t170" class="run"><span class="n"><a href="#t170">170</a></span><span class="t">    <span class="nam">k</span> <span class="op">=</span> <span class="nam">_check_int_input</span><span class="op">(</span><span class="nam">k</span><span class="op">,</span> <span class="str">"k"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t171" class="run"><span class="n"><a href="#t171">171</a></span><span class="t">    <span class="nam">alpha_design</span> <span class="op">=</span> <span class="nam">_check_str_input</span><span class="op">(</span><span class="nam">alpha_design</span><span class="op">,</span> <span class="str">"alpha_design"</span><span class="op">,</span> <span class="op">[</span><span class="str">"orthogonal"</span><span class="op">,</span> <span class="str">"rotatable"</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t172" class="run"><span class="n"><a href="#t172">172</a></span><span class="t">    <span class="nam">face_design</span> <span class="op">=</span> <span class="nam">_check_str_input</span><span class="op">(</span><span class="nam">face_design</span><span class="op">,</span> <span class="str">"face_design"</span><span class="op">,</span> <span class="op">[</span><span class="str">"CCC"</span><span class="op">,</span> <span class="str">"CCF"</span><span class="op">,</span> <span class="str">"CCI"</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t173" class="pln"><span class="n"><a href="#t173">173</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t174" class="run"><span class="n"><a href="#t174">174</a></span><span class="t">    <span class="key">if</span> <span class="nam">k</span> <span class="op">&lt;</span> <span class="num">2</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t175" class="run"><span class="n"><a href="#t175">175</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"Input k must be >= 2 to produce a valid design."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t176" class="pln"><span class="n"><a href="#t176">176</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t177" class="run"><span class="n"><a href="#t177">177</a></span><span class="t">    <span class="nam">center</span> <span class="op">=</span> <span class="nam">center</span> <span class="key">if</span> <span class="nam">alpha_design</span> <span class="op">==</span> <span class="str">"orthogonal"</span> <span class="key">else</span> <span class="op">(</span><span class="num">1</span><span class="op">,</span> <span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t178" class="run"><span class="n"><a href="#t178">178</a></span><span class="t">    <span class="nam">alpha</span> <span class="op">=</span> <span class="nam">_get_alpha</span><span class="op">(</span><span class="nam">k</span><span class="op">,</span> <span class="nam">alpha_design</span><span class="op">=</span><span class="nam">alpha_design</span><span class="op">,</span> <span class="nam">center</span><span class="op">=</span><span class="nam">center</span><span class="op">)</span> <span class="key">if</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t179" class="pln"><span class="n"><a href="#t179">179</a></span><span class="t">        <span class="nam">face_design</span> <span class="op">!=</span> <span class="str">"ccf"</span> <span class="key">else</span> <span class="num">1.0</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t180" class="pln"><span class="n"><a href="#t180">180</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t181" class="run"><span class="n"><a href="#t181">181</a></span><span class="t">    <span class="nam">matrix_f</span> <span class="op">=</span> <span class="nam">_get_matrix_f</span><span class="op">(</span><span class="nam">k</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t182" class="run"><span class="n"><a href="#t182">182</a></span><span class="t">    <span class="nam">matrix_c</span> <span class="op">=</span> <span class="nam">_get_matrix_c</span><span class="op">(</span><span class="nam">k</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t183" class="pln"><span class="n"><a href="#t183">183</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t184" class="pln"><span class="n"><a href="#t184">184</a></span><span class="t">    <span class="com"># Circumscribed Face (CCC)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t185" class="run"><span class="n"><a href="#t185">185</a></span><span class="t">    <span class="key">if</span> <span class="nam">face_design</span> <span class="op">==</span> <span class="str">"ccc"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t186" class="run"><span class="n"><a href="#t186">186</a></span><span class="t">        <span class="nam">matrix_c</span> <span class="op">=</span> <span class="nam">matrix_c</span> <span class="op">*</span> <span class="nam">alpha</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t187" class="pln"><span class="n"><a href="#t187">187</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t188" class="pln"><span class="n"><a href="#t188">188</a></span><span class="t">    <span class="com"># Inscribed Face (CCI)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t189" class="run"><span class="n"><a href="#t189">189</a></span><span class="t">    <span class="key">elif</span> <span class="nam">face_design</span> <span class="op">==</span> <span class="str">"cci"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t190" class="pln"><span class="n"><a href="#t190">190</a></span><span class="t">        <span class="com"># normalize matrix_f by distance alpha</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t191" class="run"><span class="n"><a href="#t191">191</a></span><span class="t">        <span class="nam">matrix_f</span> <span class="op">=</span> <span class="nam">matrix_f</span> <span class="op">/</span> <span class="nam">alpha</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t192" class="pln"><span class="n"><a href="#t192">192</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t193" class="pln"><span class="n"><a href="#t193">193</a></span><span class="t">    <span class="com"># Faced Centered Face (CCF): alpha is always 1</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t194" class="pln"><span class="n"><a href="#t194">194</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t195" class="run"><span class="n"><a href="#t195">195</a></span><span class="t">    <span class="nam">center_1</span> <span class="op">=</span> <span class="nam">zeros</span><span class="op">(</span><span class="op">(</span><span class="nam">center</span><span class="op">[</span><span class="num">0</span><span class="op">]</span><span class="op">,</span> <span class="nam">k</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t196" class="run"><span class="n"><a href="#t196">196</a></span><span class="t">    <span class="nam">center_2</span> <span class="op">=</span> <span class="nam">zeros</span><span class="op">(</span><span class="op">(</span><span class="nam">center</span><span class="op">[</span><span class="num">1</span><span class="op">]</span><span class="op">,</span> <span class="nam">k</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t197" class="pln"><span class="n"><a href="#t197">197</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t198" class="run"><span class="n"><a href="#t198">198</a></span><span class="t">    <span class="key">return</span> <span class="nam">DataFrame</span><span class="op">(</span><span class="nam">data</span><span class="op">=</span><span class="nam">r_</span><span class="op">[</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t199" class="pln"><span class="n"><a href="#t199">199</a></span><span class="t">        <span class="nam">r_</span><span class="op">[</span><span class="nam">matrix_f</span><span class="op">,</span> <span class="nam">center_1</span><span class="op">]</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t200" class="pln"><span class="n"><a href="#t200">200</a></span><span class="t">        <span class="nam">r_</span><span class="op">[</span><span class="nam">matrix_c</span><span class="op">,</span> <span class="nam">center_2</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t201" class="pln"><span class="n"><a href="#t201">201</a></span><span class="t">    <span class="op">]</span><span class="op">,</span> <span class="nam">columns</span><span class="op">=</span><span class="op">[</span><span class="str">"x{}"</span><span class="op">.</span><span class="nam">format</span><span class="op">(</span><span class="nam">i</span><span class="op">)</span> <span class="key">for</span> <span class="nam">i</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="nam">k</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+</div>
+<div id="footer">
+    <div class="content">
+        <p>
+            <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.0.3</a>,
+            created at 2020-08-29 19:31
+        </p>
+    </div>
+</div>
+</body>
+</html>

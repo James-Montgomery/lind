@@ -189,6 +189,7 @@ modified version covered by the GPL.</p>
 <dt>TODO: There are parts of this code written by convenience that could be vectorized for increased</dt><dd><p>speed. Will need to update code in the future to better optimize for speed.</p>
 </dd>
 </dl>
+<p>TODO: Add better docstrings to private utility functions</p>
 <dl class="function">
 <dt id="lind.analysis.multiple_comparison_procedures.bh">
 <code class="sig-prename descclassname">lind.analysis.multiple_comparison_procedures.</code><code class="sig-name descname">bh</code><span class="sig-paren">(</span><em class="sig-param">p_values: Union[List, numpy.ndarray]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lind.analysis.multiple_comparison_procedures.bh" title="Permalink to this definition">¶</a></dt>
@@ -208,14 +209,18 @@ methods).</p>
 <dd class="field-odd"><p>ndarray[float]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="n">bh</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">])</span>
+</pre></div>
+</div>
 <p class="rubric">References</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>Controlling the false discovery rate: a practical and powerful approach to multiple testing.</dt><dd><p>by Benjamini and Hochberg</p>
+<dl class="simple">
+<dt>Benjamini and Hochberg</dt><dd><ul class="simple">
+<li><p>Controlling the false discovery rate: a practical and powerful approach to multiple
+testing</p></li>
+</ul>
 </dd>
 </dl>
-</li>
-</ul>
 </dd></dl>
 
 <dl class="function">
@@ -237,14 +242,17 @@ methods).</p>
 <dd class="field-odd"><p>ndarray[float]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="n">by</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">])</span>
+</pre></div>
+</div>
 <p class="rubric">References</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>The control of the false discovery rate in multiple testing under dependency.</dt><dd><p>by Benjamini and Yekutieli</p>
+<dl class="simple">
+<dt>Benjamini and Yekutieli</dt><dd><ul class="simple">
+<li><p>The control of the false discovery rate in multiple testing under dependency.</p></li>
+</ul>
 </dd>
 </dl>
-</li>
-</ul>
 </dd></dl>
 
 <dl class="function">
@@ -265,11 +273,21 @@ under the same assumption.</p>
 <dd class="field-odd"><p>ndarray[float]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="n">bonferonni</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">])</span>
+</pre></div>
+</div>
 <p class="rubric">References</p>
-<ul class="simple">
-<li><p>Teoria statistica delle classi e calcolo delle probabilità by Bonferroni</p></li>
-<li><p>Multiple Hypothesis Testing by Shaffer</p></li>
+<dl class="simple">
+<dt>Bonferroni</dt><dd><ul class="simple">
+<li><p>Teoria statistica delle classi e calcolo delle probabilità</p></li>
 </ul>
+</dd>
+<dt>Shaffer</dt><dd><ul class="simple">
+<li><p>Multiple Hypothesis Testing</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -289,10 +307,17 @@ under the same assumption.</p>
 <dd class="field-odd"><p>ndarray[float]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="n">holm</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">])</span>
+</pre></div>
+</div>
 <p class="rubric">References</p>
-<ul class="simple">
-<li><p>A simple sequentially rejective multiple test procedure by Holm</p></li>
+<dl class="simple">
+<dt>Holm</dt><dd><ul class="simple">
+<li><p>A simple sequentially rejective multiple test procedure</p></li>
 </ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -313,20 +338,23 @@ under the same assumption.</p>
 <dd class="field-odd"><p>ndarray[float]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="n">hommel</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">])</span>
+</pre></div>
+</div>
 <p class="rubric">References</p>
-<ul class="simple">
-<li><p>A stagewise rejective multiple test procedure based on a modified Bonferroni test by Hommel</p></li>
-<li><dl class="simple">
-<dt>Some probability inequalities for ordered MTP2 random variables: a proof of Simes conjecture</dt><dd><p>by Sarkar</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>The Simes method for multiple hypothesis testing with positively dependent test statistics</dt><dd><p>by Sarkar</p>
-</dd>
-</dl>
-</li>
+<dl class="simple">
+<dt>Hommel</dt><dd><ul class="simple">
+<li><p>A stagewise rejective multiple test procedure based on a modified Bonferroni test</p></li>
 </ul>
+</dd>
+<dt>Sarkar</dt><dd><ul class="simple">
+<li><p>Some probability inequalities for ordered MTP2 random variables: a proof of Simes
+conjecture</p></li>
+<li><p>The Simes method for multiple hypothesis testing with positively dependent test statistics</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -347,20 +375,21 @@ under the same assumption.</p>
 <dd class="field-odd"><p>ndarray[float]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="n">hochberg</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">])</span>
+</pre></div>
+</div>
 <p class="rubric">References</p>
-<ul class="simple">
-<li><p>A sharper Bonferroni procedure for multiple tests of significance by Hochberg</p></li>
-<li><dl class="simple">
-<dt>Some probability inequalities for ordered MTP2 random variables: a proof of Simes conjecture</dt><dd><p>by Sarkar</p>
+<dl class="simple">
+<dt>Hochberg</dt><dd><p>A sharper Bonferroni procedure for multiple tests of significance by</p>
 </dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>The Simes method for multiple hypothesis testing with positively dependent test statistics</dt><dd><p>by Sarkar</p>
-</dd>
-</dl>
-</li>
+<dt>Sarkar</dt><dd><ul class="simple">
+<li><p>Some probability inequalities for ordered MTP2 random variables: a proof of Simes
+conjecture</p></li>
+<li><p>The Simes method for multiple hypothesis testing with positively dependent test statistics</p></li>
 </ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
