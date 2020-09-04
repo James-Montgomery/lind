@@ -26,6 +26,11 @@ from lind import design
 from lind import analysis
 # TODO from lind import simulations
 
+from importlib.util import find_spec as _find_spec # requires python >= 3.3
+if _find_spec('rpy2') is not None:
+    from lind import r_backends
+
+
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions

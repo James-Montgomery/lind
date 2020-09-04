@@ -2,7 +2,22 @@
 utilities: common utilities used throughout the code base
 """
 
+import logging
 from typing import List, Optional
+
+from numpy import fill_diagonal, dot
+
+# set logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+def _backend_warning():
+    """
+    Convenience function for issuing warnings for backend modules.
+    """
+    logging.warning("This code is merely a wrapper. Code quality and "
+                    "validation supported by underlying R packages.")
 
 
 def _check_int_input(var, input_name: str) -> int:
@@ -67,3 +82,9 @@ def _check_str_input(var, input_name: str, valid_options: Optional[List[str]] = 
                              "options: {2}.".format(var, input_name, valid_options))
 
     return var
+
+
+def _check_orthogonal(arr):
+    product = dot(arr, arr.T)
+    fill_diagonal(product, 0.0)
+    return product.any() == 0.0

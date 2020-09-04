@@ -1,5 +1,5 @@
 [run]
-omit = */_version.py
+omit = */_version.py, lind/r_backends/*
 
 [html]
 directory = ./docs/coverage
