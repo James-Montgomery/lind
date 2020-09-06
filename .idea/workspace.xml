@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="512899b6-2e95-49fe-8caa-b2a4f4cea52c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind__utilities_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind__utilities_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_analysis_continuous_t_test_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_analysis_continuous_t_test_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_analysis_continuous_z_test_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_analysis_continuous_z_test_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_analysis_discrete_anova_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_analysis_discrete_anova_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_analysis_discrete_chi_squared_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_analysis_discrete_chi_squared_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_analysis_discrete_proportions_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_analysis_discrete_proportions_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_analysis_library_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_analysis_library_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_analysis_multiple_comparison_procedures_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_analysis_multiple_comparison_procedures_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_design_box_behnken_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_design_box_behnken_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_design_latin_hyper_cube_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_design_latin_hyper_cube_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/lind_design_taguchi_py.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/lind_design_taguchi_py.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/coverage/status.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/coverage/status.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lind/_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/lind/_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/design/test_box_wilson.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/design/test_box_wilson.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/design/test_factorial.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/design/test_factorial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/design/test_plackett_burman.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/design/test_plackett_burman.py" afterDir="false" />
-    </list>
+    <list default="true" id="512899b6-2e95-49fe-8caa-b2a4f4cea52c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -49,24 +49,27 @@ pip install .
 To install from [pypi](https://pypi.org/project/lind/):
 
 ```
-pip install -U lind
+pip install lind
 ```
 
-To install the package with test dependencies add `["tests"]` to the install
+To install the package with test dependencies add `[tests]` to the install
 command:
 
 ```
-pip install .[tests]
-# or
-pip install -U lind[tests]
+pip install lind[tests]
 ```
 
 To install with test dependencies and R backends:
 
 ```
-pip install ".[tests, r_backends]"
-# or
 pip install -U "lind[tests, r_backends]"
+```
+
+Some functionality requires pre-computed designs available as static files. To
+install with static file support:
+
+```
+pip install -U "lind[tests, r_backends, static_designs]"
 ```
 
 ### R Backends
@@ -163,9 +166,7 @@ software engineer.
 
 ## TODO
 
-A quick rundown of project tasks:
-1. add a quick start guide for new users
-2.
+TBD
 
 ## Useful Resources
 
