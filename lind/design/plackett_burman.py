@@ -24,12 +24,12 @@ Recommended import style:
 
 """
 
-from os.path import dirname, abspath
 import logging
 
 from pandas import DataFrame, read_csv
 
 from lind._utilities import _check_int_input
+from lind import _sfap
 
 # set logging
 logging.basicConfig(level=logging.INFO)
@@ -79,7 +79,7 @@ def fetch_plackett_burman_design(num_factors: int) -> DataFrame:
 
     num_factors = int(num_factors)
     design_name = str(4 * (1+num_factors//4)) + ".csv"
-    path = dirname(abspath(__file__))
-    return read_csv(path+"/static_designs/plackett_burman/"+design_name, header=0, index_col=0,
+    if _sfap is None: raise Exception("Missing dependency lind-static-resources")
+    return read_csv(_sfap+"/plackett_burman/"+design_name, header=0, index_col=0,
                     names=["x{}".format(i) for i in range(4 * (1+num_factors//4))]
                     ).iloc[:, :num_factors]

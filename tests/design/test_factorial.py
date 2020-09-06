@@ -9,6 +9,7 @@ from pandas.util.testing import assert_frame_equal
 
 from lind.design.factorial import design_full_factorial, design_partial_factorial, \
     fetch_partial_factorial_design
+from lind._utilities import _check_balanced, _check_orthogonal
 from ._validated_partial_factorial_designs import *
 
 ####################################################################################################
@@ -96,7 +97,10 @@ def test_design_partial_factorial_orthogonal(k, res):
 
     Ensure that this function returns orthogonal designs.
     """
-    assert not any(design_partial_factorial(k=k, res=res).sum(axis=0).values)
+
+    arr = design_partial_factorial(k=k, res=res).values
+    assert _check_balanced(arr), "Array not balanced."
+    assert _check_orthogonal(arr), "Array not orthogonal."
 
 
 ####################################################################################################
@@ -110,7 +114,10 @@ def test_fetch_partial_factorial_design_orthogonal(design):
     Ensure that this function returns orthogonal designs. These designs are validated by trusted
     sources, but my motto is "trust but verify".
     """
-    assert not any(fetch_partial_factorial_design(design).sum(axis=0).values)
+
+    arr = fetch_partial_factorial_design(design).values
+    assert _check_balanced(arr), "Array not balanced."
+    assert _check_orthogonal(arr), "Array not orthogonal."
 
 
 def test_fetch_partial_factorial_design_value_error():

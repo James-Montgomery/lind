@@ -7,6 +7,7 @@ from numpy import any
 import pytest
 
 from lind.design.plackett_burman import fetch_plackett_burman_design
+from lind._utilities import _check_orthogonal, _check_balanced
 
 ####################################################################################################
 
@@ -19,7 +20,10 @@ def test_fetch_plackett_burman_design_orthogonal(num_factors):
     Ensure that this function returns orthogonal designs. These designs are validated by trusted
     sources, but my motto is "trust but verify".
     """
-    assert not any(fetch_plackett_burman_design(num_factors).sum(axis=0).values)
+
+    arr = fetch_plackett_burman_design(num_factors).values
+    assert _check_balanced(arr), "Array not balanced."
+    assert _check_orthogonal(arr), "Array not orthogonal."
 
 
 @pytest.mark.parametrize("num_factors", ["bad input", 7.1])

@@ -5,7 +5,7 @@ utilities: common utilities used throughout the code base
 import logging
 from typing import List, Optional
 
-from numpy import fill_diagonal, dot
+from numpy import fill_diagonal, dot, eye, allclose, ndarray, zeros
 
 # set logging
 logging.basicConfig(level=logging.INFO)
@@ -16,8 +16,9 @@ def _backend_warning():
     """
     Convenience function for issuing warnings for backend modules.
     """
-    logging.warning("This code is merely a wrapper. Code quality and "
-                    "validation supported by underlying R packages.")
+    logging.warning("All code in r_backends is merely a python wrapper over "
+                    "existing DOE packages in R. Code quality and validation "
+                    "supported by underlying R packages.")
 
 
 def _check_int_input(var, input_name: str) -> int:
@@ -84,7 +85,44 @@ def _check_str_input(var, input_name: str, valid_options: Optional[List[str]] = 
     return var
 
 
-def _check_orthogonal(arr):
-    product = dot(arr, arr.T)
-    fill_diagonal(product, 0.0)
-    return product.any() == 0.0
+def _check_balanced(arr: ndarray, rtol: float = 1e-07, atol: float = 0.0) -> bool:
+    """
+
+    Parameters
+    ----------
+    arr
+    rtol
+    atol
+
+    Returns
+    -------
+
+    """
+    col_sums = arr.sum(axis=0).astype(float)
+    return allclose(
+        col_sums, zeros(col_sums.shape[0], dtype=float),
+        rtol=rtol, atol=atol
+    )
+
+
+def _check_orthogonal(arr: ndarray, rtol: float = 1e-07, atol: float = 0.0) -> bool:
+    """
+
+    Parameters
+    ----------
+    arr : np.ndarray
+        an array to check for orthogonality
+    rtol :
+    atol
+
+    Returns
+    -------
+    bool
+        returns True if orthogonal withing specified tolerances, returns False if not orthogonal
+    """
+    product = dot(arr.T, arr)
+    fill_diagonal(product, 1.0)
+    return allclose(
+        product.astype(float), eye(arr.shape[1], dtype=float),
+        rtol=rtol, atol=atol
+    )

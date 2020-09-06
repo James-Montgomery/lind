@@ -22,7 +22,6 @@ Recommended import style:
 
 """
 
-from os.path import dirname, abspath
 import logging
 from typing import Union, List, Optional
 
@@ -36,6 +35,7 @@ from pandas import DataFrame, read_csv
 from patsy import dmatrix  # pylint: disable=no-name-in-module
 
 from lind._utilities import _check_int_input
+from lind import _sfap
 
 # set logging
 logging.basicConfig(level=logging.INFO)
@@ -257,9 +257,9 @@ def fetch_partial_factorial_design(design_name: str = "toc") -> DataFrame:
 
     assert isinstance(design_name, str), "Input design_name must be a string."
     design_name = design_name.lower().strip() + ".csv"
-    path = dirname(abspath(__file__))
+    if _sfap is None: raise Exception("Missing dependency lind-static-resources")
     try:
-        return read_csv(path+"/static_designs/factorial/"+design_name, index_col=0)
+        return read_csv(_sfap+"/factorial/"+design_name, index_col=0)
     except FileNotFoundError as exception:
         logging.error(exception)
         raise ValueError("Please input a valid design. `{}` not found. "

@@ -7,6 +7,7 @@ from numpy import any
 import pytest
 
 from lind.design.box_wilson import design_box_wilson
+from lind._utilities import _check_orthogonal, _check_balanced
 
 ####################################################################################################
 
@@ -22,12 +23,17 @@ def test_design_box_wilson_orthogonal(num_factors, alpha_design, center, face_de
     Ensure that this function returns orthogonal designs.
     """
 
-    assert not any(design_box_wilson(
+    # close enough to orthogonal
+    atol = 0.0 if face_design != "CCI" else 1e-13
+
+    arr = design_box_wilson(
         k=num_factors,
         alpha_design=alpha_design,
         center=center,
         face_design=face_design
-    ).sum(axis=0).values.round(13))
+    ).values
+    assert _check_balanced(arr, atol=atol), "Array not balanced."
+    assert _check_orthogonal(arr, atol=atol), "Array not orthogonal."
 
 
 @pytest.mark.parametrize("num_factors, alpha_design, face_design", [

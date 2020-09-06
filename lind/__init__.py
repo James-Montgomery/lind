@@ -2,6 +2,8 @@
 Lind
 ====
 
+Lind is a package for experimental design and analysis.
+
 How to use the documentation
 ----------------------------
 Documentation is available in two forms: docstrings provided
@@ -20,16 +22,20 @@ Code snippets are indicated by three greater-than signs::
   >>> x = x + 1
 Use the built-in ``help`` function to view a function's docstring::
   >>> help(ld.design.design_full_factorial)
+  
 """
-
-from lind import design
-from lind import analysis
-# TODO from lind import simulations
 
 from importlib.util import find_spec as _find_spec # requires python >= 3.3
 if _find_spec('rpy2') is not None:
     from lind import r_backends
+if _find_spec('lind_static_resources') is not None:
+    from lind_static_resources import static_files_abs_path as _sfap
+else:
+    _sfap = None
 
+from lind import design
+from lind import analysis
+# TODO from lind import simulations
 
 from ._version import get_versions
 __version__ = get_versions()['version']

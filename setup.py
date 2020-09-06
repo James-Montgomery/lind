@@ -80,7 +80,8 @@ def setup_package():
     """
     Function to manage setup procedures.
 
-    >>> pip install "lind[tests, r_backends]"
+    >>> pip install "lind[tests, r_backends, static_designs]"
+    >>> pip install -e ".[tests, r_backends, static_designs]"
     >>> pip uninstall lind -y
 
     """
@@ -112,6 +113,7 @@ def setup_package():
         extras_require={
             "tests": parse_requirements("requirements_test.txt"),
             "r_backends": ["rpy2==3.3.5"],
+            "static_designs": ["lind-static-resources==0.0.6"]
         },
         cmdclass=cmdclass,
 
