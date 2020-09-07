@@ -79,7 +79,8 @@ def fetch_plackett_burman_design(num_factors: int) -> DataFrame:
 
     num_factors = int(num_factors)
     design_name = str(4 * (1+num_factors//4)) + ".csv"
-    if _sfap is None: raise Exception("Missing dependency lind-static-resources")
+    if _sfap is None:
+        raise Exception("Missing dependency lind-static-resources")
     return read_csv(_sfap+"/plackett_burman/"+design_name, header=0, index_col=0,
                     names=["x{}".format(i) for i in range(4 * (1+num_factors//4))]
                     ).iloc[:, :num_factors]

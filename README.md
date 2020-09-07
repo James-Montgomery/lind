@@ -166,7 +166,7 @@ software engineer.
 
 ## TODO
 
-TBD
+1. Install R in docker containers
 
 ## Useful Resources
 

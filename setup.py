@@ -28,6 +28,11 @@ python3 -m twine upload --verbose --repository-url https://upload.pypi.org/legac
 cd docs && make html # update docs
 """
 
+# Convenient cleanup script
+"""
+rm -rf build;rm -rf dist;rm -rf *.info;rm -rf *.egg-info;rm -rf .coverage; rm -rf .pytest_cache
+"""
+
 ################################################################################
 
 
@@ -80,7 +85,7 @@ def setup_package():
     """
     Function to manage setup procedures.
 
-    >>> pip install "lind[tests, r_backends, static_designs]"
+    >>> pip install -U "lind[tests, r_backends, static_designs]"
     >>> pip install -e ".[tests, r_backends, static_designs]"
     >>> pip uninstall lind -y
 

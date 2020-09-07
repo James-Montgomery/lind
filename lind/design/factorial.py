@@ -84,7 +84,7 @@ def design_full_factorial(factors: List[List],
     ----------
     factors : List[List]
         a list of lists representing factors and levels
-    factor_names : List[str]
+    factor_names : List[str], optional
         a list of names for the factors in the first argument. Must share the order of the first
         argument.
 
@@ -257,7 +257,8 @@ def fetch_partial_factorial_design(design_name: str = "toc") -> DataFrame:
 
     assert isinstance(design_name, str), "Input design_name must be a string."
     design_name = design_name.lower().strip() + ".csv"
-    if _sfap is None: raise Exception("Missing dependency lind-static-resources")
+    if _sfap is None:
+        raise Exception("Missing dependency lind-static-resources")
     try:
         return read_csv(_sfap+"/factorial/"+design_name, index_col=0)
     except FileNotFoundError as exception:
