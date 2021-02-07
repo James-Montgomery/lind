@@ -55,47 +55,50 @@
     <p id="t2" class="pln"><span class="n"><a href="#t2">2</a></span><span class="t"><span class="str">Lind</span>&nbsp;</span><span class="r"></span></p>
     <p id="t3" class="pln"><span class="n"><a href="#t3">3</a></span><span class="t"><span class="str">====</span>&nbsp;</span><span class="r"></span></p>
     <p id="t4" class="pln"><span class="n"><a href="#t4">4</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t5" class="pln"><span class="n"><a href="#t5">5</a></span><span class="t"><span class="str">How to use the documentation</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t6" class="pln"><span class="n"><a href="#t6">6</a></span><span class="t"><span class="str">----------------------------</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t7" class="pln"><span class="n"><a href="#t7">7</a></span><span class="t"><span class="str">Documentation is available in two forms: docstrings provided</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t8" class="pln"><span class="n"><a href="#t8">8</a></span><span class="t"><span class="str">with the code, and a loose standing reference guide, available from</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t9" class="pln"><span class="n"><a href="#t9">9</a></span><span class="t"><span class="str">the documentation site https://james-montgomery.github.io/lind/build/html/index.html</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t10" class="pln"><span class="n"><a href="#t10">10</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t11" class="pln"><span class="n"><a href="#t11">11</a></span><span class="t"><span class="str">We recommend exploring the docstrings using</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t12" class="pln"><span class="n"><a href="#t12">12</a></span><span class="t"><span class="str">`IPython &lt;https://ipython.org>`_, an advanced Python shell with</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t13" class="pln"><span class="n"><a href="#t13">13</a></span><span class="t"><span class="str">TAB-completion and introspection capabilities.  See below for further</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t14" class="pln"><span class="n"><a href="#t14">14</a></span><span class="t"><span class="str">instructions.</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t15" class="pln"><span class="n"><a href="#t15">15</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t16" class="pln"><span class="n"><a href="#t16">16</a></span><span class="t"><span class="str">The docstring examples assume that `numpy` has been imported as `np`::</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t17" class="pln"><span class="n"><a href="#t17">17</a></span><span class="t"><span class="str">  >>> import lind as ld</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t18" class="pln"><span class="n"><a href="#t18">18</a></span><span class="t"><span class="str">Code snippets are indicated by three greater-than signs::</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t19" class="pln"><span class="n"><a href="#t19">19</a></span><span class="t"><span class="str">  >>> x = 42</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t20" class="pln"><span class="n"><a href="#t20">20</a></span><span class="t"><span class="str">  >>> x = x + 1</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t21" class="pln"><span class="n"><a href="#t21">21</a></span><span class="t"><span class="str">Use the built-in ``help`` function to view a function's docstring::</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t22" class="pln"><span class="n"><a href="#t22">22</a></span><span class="t"><span class="str">  >>> help(ld.design.design_full_factorial)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t23" class="pln"><span class="n"><a href="#t23">23</a></span><span class="t"><span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t24" class="pln"><span class="n"><a href="#t24">24</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t25" class="run"><span class="n"><a href="#t25">25</a></span><span class="t"><span class="key">from</span> <span class="nam">importlib</span><span class="op">.</span><span class="nam">util</span> <span class="key">import</span> <span class="nam">find_spec</span> <span class="key">as</span> <span class="nam">_find_spec</span> <span class="com"># requires python >= 3.3</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t26" class="run"><span class="n"><a href="#t26">26</a></span><span class="t"><span class="key">if</span> <span class="nam">_find_spec</span><span class="op">(</span><span class="str">'rpy2'</span><span class="op">)</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t27" class="run"><span class="n"><a href="#t27">27</a></span><span class="t">    <span class="key">from</span> <span class="nam">lind</span> <span class="key">import</span> <span class="nam">r_backends</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t28" class="run"><span class="n"><a href="#t28">28</a></span><span class="t"><span class="key">if</span> <span class="nam">_find_spec</span><span class="op">(</span><span class="str">'lind_static_resources'</span><span class="op">)</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">    <span class="key">from</span> <span class="nam">lind_static_resources</span> <span class="key">import</span> <span class="nam">static_files_abs_path</span> <span class="key">as</span> <span class="nam">_sfap</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t30" class="pln"><span class="n"><a href="#t30">30</a></span><span class="t"><span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t31" class="mis show_mis"><span class="n"><a href="#t31">31</a></span><span class="t">    <span class="nam">_sfap</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t32" class="pln"><span class="n"><a href="#t32">32</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t33" class="run"><span class="n"><a href="#t33">33</a></span><span class="t"><span class="key">from</span> <span class="nam">lind</span> <span class="key">import</span> <span class="nam">design</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t34" class="run"><span class="n"><a href="#t34">34</a></span><span class="t"><span class="key">from</span> <span class="nam">lind</span> <span class="key">import</span> <span class="nam">analysis</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t35" class="pln"><span class="n"><a href="#t35">35</a></span><span class="t"><span class="com"># TODO from lind import simulations</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t36" class="pln"><span class="n"><a href="#t36">36</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t37" class="run"><span class="n"><a href="#t37">37</a></span><span class="t"><span class="key">from</span> <span class="op">.</span><span class="nam">_version</span> <span class="key">import</span> <span class="nam">get_versions</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t38" class="run"><span class="n"><a href="#t38">38</a></span><span class="t"><span class="nam">__version__</span> <span class="op">=</span> <span class="nam">get_versions</span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="str">'version'</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t39" class="run"><span class="n"><a href="#t39">39</a></span><span class="t"><span class="key">del</span> <span class="nam">get_versions</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t5" class="pln"><span class="n"><a href="#t5">5</a></span><span class="t"><span class="str">Lind is a package for experimental design and analysis.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t6" class="pln"><span class="n"><a href="#t6">6</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t7" class="pln"><span class="n"><a href="#t7">7</a></span><span class="t"><span class="str">How to use the documentation</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t8" class="pln"><span class="n"><a href="#t8">8</a></span><span class="t"><span class="str">----------------------------</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t9" class="pln"><span class="n"><a href="#t9">9</a></span><span class="t"><span class="str">Documentation is available in two forms: docstrings provided</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t10" class="pln"><span class="n"><a href="#t10">10</a></span><span class="t"><span class="str">with the code, and a loose standing reference guide, available from</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t11" class="pln"><span class="n"><a href="#t11">11</a></span><span class="t"><span class="str">the documentation site https://james-montgomery.github.io/lind/build/html/index.html</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t12" class="pln"><span class="n"><a href="#t12">12</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t13" class="pln"><span class="n"><a href="#t13">13</a></span><span class="t"><span class="str">We recommend exploring the docstrings using</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t14" class="pln"><span class="n"><a href="#t14">14</a></span><span class="t"><span class="str">`IPython &lt;https://ipython.org>`_, an advanced Python shell with</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t15" class="pln"><span class="n"><a href="#t15">15</a></span><span class="t"><span class="str">TAB-completion and introspection capabilities.  See below for further</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t16" class="pln"><span class="n"><a href="#t16">16</a></span><span class="t"><span class="str">instructions.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t17" class="pln"><span class="n"><a href="#t17">17</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t18" class="pln"><span class="n"><a href="#t18">18</a></span><span class="t"><span class="str">The docstring examples assume that `numpy` has been imported as `np`::</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t19" class="pln"><span class="n"><a href="#t19">19</a></span><span class="t"><span class="str">  >>> import lind as ld</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t20" class="pln"><span class="n"><a href="#t20">20</a></span><span class="t"><span class="str">Code snippets are indicated by three greater-than signs::</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t21" class="pln"><span class="n"><a href="#t21">21</a></span><span class="t"><span class="str">  >>> x = 42</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t22" class="pln"><span class="n"><a href="#t22">22</a></span><span class="t"><span class="str">  >>> x = x + 1</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t23" class="pln"><span class="n"><a href="#t23">23</a></span><span class="t"><span class="str">Use the built-in ``help`` function to view a function's docstring::</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t24" class="pln"><span class="n"><a href="#t24">24</a></span><span class="t"><span class="str">  >>> help(ld.design.design_full_factorial)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t25" class="pln"><span class="n"><a href="#t25">25</a></span><span class="t"><span class="str">  </span>&nbsp;</span><span class="r"></span></p>
+    <p id="t26" class="pln"><span class="n"><a href="#t26">26</a></span><span class="t"><span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t27" class="pln"><span class="n"><a href="#t27">27</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t28" class="run"><span class="n"><a href="#t28">28</a></span><span class="t"><span class="key">from</span> <span class="nam">importlib</span><span class="op">.</span><span class="nam">util</span> <span class="key">import</span> <span class="nam">find_spec</span> <span class="key">as</span> <span class="nam">_find_spec</span> <span class="com"># requires python >= 3.3</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t"><span class="key">if</span> <span class="nam">_find_spec</span><span class="op">(</span><span class="str">'rpy2'</span><span class="op">)</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t30" class="run"><span class="n"><a href="#t30">30</a></span><span class="t">    <span class="key">from</span> <span class="nam">lind</span> <span class="key">import</span> <span class="nam">r_backends</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t31" class="run"><span class="n"><a href="#t31">31</a></span><span class="t"><span class="key">if</span> <span class="nam">_find_spec</span><span class="op">(</span><span class="str">'lind_static_resources'</span><span class="op">)</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t32" class="run"><span class="n"><a href="#t32">32</a></span><span class="t">    <span class="key">from</span> <span class="nam">lind_static_resources</span> <span class="key">import</span> <span class="nam">static_files_abs_path</span> <span class="key">as</span> <span class="nam">_sfap</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t33" class="pln"><span class="n"><a href="#t33">33</a></span><span class="t"><span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t34" class="mis show_mis"><span class="n"><a href="#t34">34</a></span><span class="t">    <span class="nam">_sfap</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t35" class="pln"><span class="n"><a href="#t35">35</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t36" class="run"><span class="n"><a href="#t36">36</a></span><span class="t"><span class="key">from</span> <span class="nam">lind</span> <span class="key">import</span> <span class="nam">design</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t37" class="run"><span class="n"><a href="#t37">37</a></span><span class="t"><span class="key">from</span> <span class="nam">lind</span> <span class="key">import</span> <span class="nam">analysis</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t38" class="pln"><span class="n"><a href="#t38">38</a></span><span class="t"><span class="com"># TODO from lind import simulations</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t39" class="pln"><span class="n"><a href="#t39">39</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t40" class="run"><span class="n"><a href="#t40">40</a></span><span class="t"><span class="key">from</span> <span class="op">.</span><span class="nam">_version</span> <span class="key">import</span> <span class="nam">get_versions</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t41" class="run"><span class="n"><a href="#t41">41</a></span><span class="t"><span class="nam">__version__</span> <span class="op">=</span> <span class="nam">get_versions</span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="str">'version'</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t42" class="run"><span class="n"><a href="#t42">42</a></span><span class="t"><span class="key">del</span> <span class="nam">get_versions</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.0.3</a>,
-            created at 2020-09-06 16:33
+            created at 2020-09-15 22:00
         </p>
     </div>
 </div>

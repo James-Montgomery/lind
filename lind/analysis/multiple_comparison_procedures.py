@@ -11,6 +11,22 @@ translation of code in the R stats package and falls under the R 4.1.0 license (
 Most of the code in this module is based on R source code covered by the GPL license. It is thus a
 modified version covered by the GPL.
 
+FDR-controlling procedures are designed to control the expected proportion of "discoveries"
+(rejected null hypotheses) that are false (incorrect rejections of the null). FDR-controlling
+procedures provide less stringent control of Type I errors compared to family-wise error rate (FWER)
+controlling procedures, which control the probability of at least one Type I error.
+
+FDR-controlling procedures have greater power, at the cost of increased numbers of Type I errors.
+The power of a binary hypothesis test is the probability that the test rejects the null hypothesis
+when a specific alternative hypothesis is true (i.e. the probability of avoiding a type II error).
+
+A type I error is the rejection of a true null hypothesis ("false positive"), while a type II error
+is the non-rejection of a false null hypothesis ("false negative").
+
+Sometimes experimenters prefer to use the language of sensitivity ans specificity.
+Sensitivity measures the proportion of positives that are correctly identified.
+Specificity measures the proportion of negatives that are correctly identified.
+
 Recommended import style:
 >>> from lind.analysis import multiple_comparison_procedures as mcp
 
