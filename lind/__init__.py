@@ -22,7 +22,7 @@ Code snippets are indicated by three greater-than signs::
   >>> x = x + 1
 Use the built-in ``help`` function to view a function's docstring::
   >>> help(ld.design.design_full_factorial)
-  
+
 """
 
 from importlib.util import find_spec as _find_spec # requires python >= 3.3
@@ -33,10 +33,8 @@ if _find_spec('lind_static_resources') is not None:
 else:
     _sfap = None
 
-from lind import design
-from lind import analysis
-# TODO from lind import simulations
+from ._version import __version__
 
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+from lind import (
+    design, analysis
+)

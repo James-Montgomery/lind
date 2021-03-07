@@ -4,9 +4,8 @@
 Setup file for package install
 """
 
+import re
 from setuptools import setup, find_namespace_packages
-import versioneer
-
 
 ################################################################################
 
@@ -35,6 +34,19 @@ rm -rf build;rm -rf dist;rm -rf *.info;rm -rf *.egg-info;rm -rf .coverage; rm -r
 
 ################################################################################
 
+def fetch_version(VERSIONFILE):
+    """ Convenience Function """
+    verstrline = open(VERSIONFILE, "rt").read()
+    VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
+    mo = re.search(VSRE, verstrline, re.M)
+
+    mo = ""
+    if mo:
+        verstr = mo.group(1)
+    else:
+        verstr = None
+
+    return verstr
 
 def parse_requirements(filename):
     """ load requirements from a pip requirements file """
@@ -43,6 +55,7 @@ def parse_requirements(filename):
 
 
 def read_text(file_name: str):
+    """ Convenience Function """
     return open(file_name).read()
 
 
@@ -91,16 +104,14 @@ def setup_package():
 
     """
 
-    cmdclass = versioneer.get_cmdclass()
-
     setup(
         name="lind",
         packages=find_namespace_packages(),
-        version=versioneer.get_version(),
+        version=fetch_version(VERSIONFILE="./lind/_version.py"),
 
         author="James Montgomery",
         author_email="jamesoneillmontgomery@gmail.com",
-        description="Package for experimental design and analysis.",
+        description="Package for experiment design and analysis.",
         long_description=read_text("README.md"),
         long_description_content_type="text/markdown",
         license=read_text("LICENSE.md"),
@@ -120,7 +131,7 @@ def setup_package():
             "r_backends": ["rpy2==3.3.5"],
             "static_designs": ["lind-static-resources==0.0.6"]
         },
-        cmdclass=cmdclass,
+        cmdclass={},
 
         package_data={
             '': ['*.csv']
