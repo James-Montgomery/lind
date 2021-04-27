@@ -1,6 +1,39 @@
 ************* Module lind
-lind/__init__.py:27:2: W0511: TODO from lind import simulations (fixme)
+lind/__init__.py:40:0: C0413: Import "from lind import design, analysis, library" should be placed at the top of the module (wrong-import-position)
+lind/__init__.py:46:0: C0413: Import "from ._version import __version__" should be placed at the top of the module (wrong-import-position)
+lind/__init__.py:78:-1: W0105: String statement has no effect (pointless-string-statement)
+lind/__init__.py:40:0: C0412: Imports from package lind are not grouped (ungrouped-imports)
+************* Module lind.library
+lind/library.py:3:0: C0304: Final newline missing (missing-final-newline)
+************* Module lind.design.taguchi
+lind/design/taguchi.py:79:0: R0913: Too many arguments (7/5) (too-many-arguments)
+************* Module lind.design._taguchi_line_diagrams
+lind/design/_taguchi_line_diagrams.py:29:2: W0511: TODO: find line graph (fixme)
+lind/design/_taguchi_line_diagrams.py:47:2: W0511: TODO: find line graph (fixme)
+lind/design/_taguchi_line_diagrams.py:49:2: W0511: TODO: find line graph (fixme)
+lind/design/_taguchi_line_diagrams.py:51:2: W0511: TODO: find line graph (fixme)
+lind/design/_taguchi_line_diagrams.py:53:2: W0511: TODO: find line graph (fixme)
+************* Module lind.design.randomization._checks
+lind/design/randomization/_checks.py:67:4: C0200: Consider using enumerate instead of iterating with range and len (consider-using-enumerate)
+************* Module lind.design.randomization.md5
+lind/design/randomization/md5.py:145:4: W0612: Unused variable 'arr_salted' (unused-variable)
+lind/design/randomization/md5.py:21:0: C0411: standard import "from hashlib import md5" should be placed before "import numpy as np" (wrong-import-order)
+************* Module lind.analysis.freq
+lind/analysis/freq.py:291:0: R0913: Too many arguments (6/5) (too-many-arguments)
+lind/analysis/freq.py:447:0: R0913: Too many arguments (8/5) (too-many-arguments)
+lind/analysis/freq.py:555:4: W0621: Redefining name 't' from outer scope (line 18) (redefined-outer-name)
+lind/analysis/freq.py:685:4: W0621: Redefining name 't' from outer scope (line 18) (redefined-outer-name)
+lind/analysis/freq.py:610:0: R0913: Too many arguments (8/5) (too-many-arguments)
+************* Module lind.r_backends
+lind/r_backends/__init__.py:1:0: C0112: Empty module docstring (empty-docstring)
+************* Module lind.r_backends.design.taguchi
+lind/r_backends/design/taguchi.py:27:19: E1101: Instance of 'InstalledSTPackage' has no 'taguchiChoose' member (no-member)
+lind/r_backends/design/taguchi.py:27:19: E1101: Instance of 'InstalledPackage' has no 'taguchiChoose' member (no-member)
+************* Module lind.r_backends.analysis.__init__
+lind/r_backends/analysis/__init__.py:1:0: R0401: Cyclic import (lind -> lind.design -> lind.design.factorial) (cyclic-import)
+lind/r_backends/analysis/__init__.py:1:0: R0401: Cyclic import (lind -> lind.design -> lind.design.plackett_burman) (cyclic-import)
+lind/r_backends/analysis/__init__.py:1:0: R0401: Cyclic import (lind -> lind.design -> lind.design.box_wilson -> lind.design.factorial) (cyclic-import)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.96/10 (previous run: 9.96/10, +0.00)
+Your code has been rated at 9.35/10 (previous run: 9.35/10, +0.00)
 

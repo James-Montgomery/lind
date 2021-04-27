@@ -8,6 +8,19 @@ Subpackages
 
    lind.analysis
    lind.design
+   lind.r_backends
+
+Submodules
+----------
+
+lind.library module
+-------------------
+
+.. automodule:: lind.library
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------
