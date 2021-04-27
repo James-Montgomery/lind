@@ -170,12 +170,25 @@
 </style>
 <div class="section" id="lind-design-package">
 <h1>lind.design package<a class="headerlink" href="#lind-design-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lind.design.randomization.html">lind.design.randomization package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lind.design.randomization.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lind.design.randomization.html#module-lind.design.randomization.md5">lind.design.randomization.md5 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lind.design.randomization.html#module-lind.design.randomization">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-lind.design.box_behnken">
 <span id="lind-design-box-behnken-module"></span><h2>lind.design.box_behnken module<a class="headerlink" href="#module-lind.design.box_behnken" title="Permalink to this headline">¶</a></h2>
-<p>TODO: add module</p>
+<p>TODO:</p>
 </div>
 <div class="section" id="module-lind.design.box_wilson">
 <span id="lind-design-box-wilson-module"></span><h2>lind.design.box_wilson module<a class="headerlink" href="#module-lind.design.box_wilson" title="Permalink to this headline">¶</a></h2>
@@ -302,7 +315,7 @@ convenience function.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>factors</strong> (<em>List[List]</em>) – a list of lists representing factors and levels</p></li>
-<li><p><strong>factor_names</strong> (<em>List[str]</em>) – a list of names for the factors in the first argument. Must share the order of the first
+<li><p><strong>factor_names</strong> (<em>List[str], optional</em>) – a list of names for the factors in the first argument. Must share the order of the first
 argument.</p></li>
 </ul>
 </dd>
@@ -431,7 +444,7 @@ if the user would like to work it out on their own.</p>
 </div>
 <div class="section" id="module-lind.design.latin_hyper_cube">
 <span id="lind-design-latin-hyper-cube-module"></span><h2>lind.design.latin_hyper_cube module<a class="headerlink" href="#module-lind.design.latin_hyper_cube" title="Permalink to this headline">¶</a></h2>
-<p>TODO: add module</p>
+<p>TODO:</p>
 </div>
 <div class="section" id="module-lind.design.plackett_burman">
 <span id="lind-design-plackett-burman-module"></span><h2>lind.design.plackett_burman module<a class="headerlink" href="#module-lind.design.plackett_burman" title="Permalink to this headline">¶</a></h2>
@@ -485,6 +498,167 @@ very efficient screening designs when only main effects are of interest.</p>
 </dl>
 </dd></dl>
 
+</div>
+<div class="section" id="module-lind.design.taguchi">
+<span id="lind-design-taguchi-module"></span><h2>lind.design.taguchi module<a class="headerlink" href="#module-lind.design.taguchi" title="Permalink to this headline">¶</a></h2>
+<p>taguchi: Taguchi experiments are quick and dirt designs that are effective for quality control in
+engineering. Some experimenters use Taguchi Method designs as screening experiments in a similar
+manner to Plackett Burman designs. They are useful designs in quality control but due to recent fads
+in marketing are often misapplied in other fields. Taguchi methods were some of the first
+<cite>Robust Parameter Designs</cite>.</p>
+<p>The Taguchi Method is a multi-step process for producing a design. To fully understand the process
+see the reources mentioned below. We provide a quick overview here: First split your factors into
+A) inner array factors (factors you control) and B) outer array factors (environmental factors out
+of your control). The function <cite>recommend_inner_array</cite> will help identify an orthogonal array
+to use as your design base. Once you know which array you want to use as your base, the function
+<cite>fetch_inner_array</cite> will retrieve that array. If there are non-trivial interactions you need to
+model in your inner array, you may need to censor certain columns before proceeding. Finally,
+append the outer array to your inner array using the function <cite>append_outer_array</cite>.</p>
+<p>An example workflow is shown below.</p>
+<p>Unlike traditional factorial designs like those in the module <cite>lind.design/factorial</cite>, Taguchi
+designs rely heavily on pre-experiment judgement. This is often useful in quality control, but can
+introduce dangerous assumptions in other fields. Taguchi’s method builds on the theory of fractional
+factorial designs, depending on the experiment requirements, either methodology may be more
+efficient and/or less biased. It is up to the experimenter to understand when to use each method.</p>
+<div class="section" id="workflow-example">
+<h3>Workflow Example<a class="headerlink" href="#workflow-example" title="Permalink to this headline">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># find the appropriate orthogonal array to build inner array of experiment design</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">recommend_inner_array</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">levels_group_a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">num_factors_group_a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">interactions_group_a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">measured_moments</span><span class="o">=</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">))</span> <span class="c1"># shows applicable designs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># fetch pandas data frame for inner array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inner_array</span> <span class="o">=</span> <span class="n">fetch_inner_array</span><span class="p">(</span><span class="n">design_file_name</span><span class="o">=</span><span class="s2">&quot;L4_2_3&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># print taguchi line graph of inner array interactions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">interaction_diagrams</span><span class="p">(</span><span class="s2">&quot;L4_2_3&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># censor columns for interactions assumed to be significant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inner_array</span> <span class="o">=</span> <span class="n">inner_array</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C (A:B)&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># append noise factors (outer array) to produce full experiment design</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">experiment_design</span> <span class="o">=</span> <span class="n">append_outer_array</span><span class="p">(</span><span class="n">inner_array</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                       <span class="n">noise_factors</span><span class="o">=</span><span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.4</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>Taguchi, Chowdhury, and Wu</dt><dd><ul class="simple">
+<li><p>Taguchi’s Quality Engineering Handbook (Appendix C)</p></li>
+</ul>
+</dd>
+<dt>Experiment Design and Analysis Reference (reliawiki)</dt><dd><ul class="simple">
+<li><p>Experiment Design and Analysis Reference (Appendix D)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="function">
+<dt id="lind.design.taguchi.recommend_inner_array">
+<code class="sig-prename descclassname">lind.design.taguchi.</code><code class="sig-name descname">recommend_inner_array</code><span class="sig-paren">(</span><em class="sig-param">levels_group_a: int = 0</em>, <em class="sig-param">num_factors_group_a: int = 0</em>, <em class="sig-param">levels_group_b: int = 0</em>, <em class="sig-param">num_factors_group_b: int = 0</em>, <em class="sig-param">interactions_group_a: int = 0</em>, <em class="sig-param">interactions_group_b: int = 0</em>, <em class="sig-param">measured_moments: int = 1</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.taguchi.recommend_inner_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is sometimes difficult to know which orthogonal array to use when defining the inner array
+of a Taguchi experiment. This function can help narrow down the appropriate choices available
+to an experimenter. The experimenter will often want to choose the design with the fewest
+number of runs, but that may not always be the case.</p>
+<p>If all arguments are left at default values then the function will return all supported
+Taguchi designs. See module docstring for references and examples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>levels_group_a</strong> (<em>int, optional</em>)</p></li>
+<li><p><strong>num_factors_group_a</strong> (<em>int, optional</em>)</p></li>
+<li><p><strong>levels_group_b</strong> (<em>int, optional</em>)</p></li>
+<li><p><strong>num_factors_group_b</strong> (<em>int, optional</em>)</p></li>
+<li><p><strong>interactions_group_a</strong> (<em>int, optional</em>)</p></li>
+<li><p><strong>interactions_group_b</strong> (<em>int, optional</em>)</p></li>
+<li><p><strong>measured_moments</strong> (<em>int, optional</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A data frame describing the available designs that meet the user’s criteria; if the data
+frame is empty then no Taguchi orthogonal arrays meet the user’s specification</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.design.taguchi.fetch_inner_array">
+<code class="sig-prename descclassname">lind.design.taguchi.</code><code class="sig-name descname">fetch_inner_array</code><span class="sig-paren">(</span><em class="sig-param">design_file_name: Optional[str] = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.taguchi.fetch_inner_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>The inner array of a Taguchi design is often just a fractional factorial design very similar
+to more traditional Fisher factorial designs. These are represented by orthogonal arrays that
+are then censored used the experimenter’s prior judgement about factor interactions.</p>
+<p>See module docstring for references and examples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>design_file_name</strong> (<em>str, optional</em>) – the name of the design / design file name that the experimenter wants to use for the inner
+array of their design</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a data frame representing the orthogonal array of interest; users may need to censor
+columns in this array to represent prior knowledge about number of factors or number of
+significant interactions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.design.taguchi.append_outer_array">
+<code class="sig-prename descclassname">lind.design.taguchi.</code><code class="sig-name descname">append_outer_array</code><span class="sig-paren">(</span><em class="sig-param">inner_array: pandas.core.frame.DataFrame, noise_factors: List[List], noise_factor_names: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#lind.design.taguchi.append_outer_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>The outer array of a Taguchi design represents the noise factors that the designer wants to
+control for with respect to the inner array. The outer array represents mini-full factorial
+designs each centered at the individual runs in the inner array. This helps provide data that
+is “robust” to the levels of the noise factors.</p>
+<p>See module docstring for references and examples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inner_array</strong> (<em>pd.DataFrame</em>) – a dataframe representing the inner array of the Taguchi design</p></li>
+<li><p><strong>noise_factors</strong> (<em>List[List]</em>) – a list of lists representing the noise factors and levels</p></li>
+<li><p><strong>noise_factor_names</strong> (<em>List[str], optional</em>) – a list of names for the factors in the first argument. Must share the order of the first
+argument.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a combination of the inner and outer arrays representing the full taguchi design; uses the
+same format as all factorial designs in this package as opposed to more traditional
+Taguchi design display formats</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.design.taguchi.interaction_diagrams">
+<code class="sig-prename descclassname">lind.design.taguchi.</code><code class="sig-name descname">interaction_diagrams</code><span class="sig-paren">(</span><em class="sig-param">design_name: str</em>, <em class="sig-param">save_path: Optional[str] = None</em>, <em class="sig-param">file_name: Optional[str] = None</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#lind.design.taguchi.interaction_diagrams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Line diagrams are vidual aids used by Taguchi to show assumptions about factor interactions
+that could be using for adapting the design of the inner array.</p>
+<p>See module docstring for references and examples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>design_name</strong> (<em>str</em>) – the name of the Taguchi design assocaited with the line graph(s); i.e. <cite>L4_2_3</cite></p></li>
+<li><p><strong>save_path</strong> (<em>str, optional</em>) – the name to use when saving the png of the line graph; should be an absolute path</p></li>
+<li><p><strong>file_name</strong> (<em>str, optional</em>) – the name to use when saving the png of the line graph; if multiple line graphs are saved a
+number will be appended to the end of the name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>does not return anything</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 </div>
 <div class="section" id="module-lind.design">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lind.design" title="Permalink to this headline">¶</a></h2>
