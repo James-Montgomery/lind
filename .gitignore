@@ -134,16 +134,27 @@ dmypy.json
 # Mac files
 .DS_Store
 
-
 *.ipynb
 !notebooks/*.ipynb
 
+*.json
+*.pickle
 *.pdf
 *.png
 *.jpg
 *.csv
+!lind/design/static_designs/*/*.csv
 *.txt
 !requirements*.txt
+!docs/style/pylint*report.txt
+!docs/latest*tag.txt
 
 .python*
 .bash*
+
+/docs/build/coverage/
+/docs/build/coverage/*
+
+*trash*
+
+.idea

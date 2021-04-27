@@ -1,2 +1,16 @@
 [run]
-omit = */_version.py
+omit =
+    */_version.py,
+    lind/r_backends/*,
+    */__init__.py,
+    */_taguchi_line_diagrams.py,
+    */taguchi.py,
+
+[html]
+directory = ./docs/coverage
+
+[report]
+exclude_lines =
+    def mean
+    def variance
+    def standard_deviation

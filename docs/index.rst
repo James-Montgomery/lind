@@ -1,5 +1,5 @@
 Welcome to Lind's documentation!
-========================================
+================================
 
 .. toctree::
    :maxdepth: 1
@@ -13,3 +13,5 @@ Index and Search:
 
 * :ref:`modindex`
 * :ref:`search`
+* `Test Coverage Report <../../coverage/index.html>`_
+* `Code Style Report <../../style/pylint_report.txt>`_
