@@ -6,6 +6,8 @@ population variance (Bessel's correction), where n is the number of samples. Thi
 the bias in the estimation of the population variance. It also partially corrects the bias in the
 estimation of the population standard deviation. However, the correction often increases the mean
 squared error in these estimations. When n is large this correction is small.
+
+TODO: add continuity corrections to unpooled z tests
 """
 import numpy as np
 from numpy import ndarray, linspace, where
@@ -19,8 +21,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 __all__ = [
-    'find_p_value', 'find_confidence_interval',
-    'get_zscore', 'get_tscore',
+    'find_p_value', 'find_test_statistic', 'find_confidence_interval',
     # 'mean', 'variance', 'standard_deviation',
     'one_samp_z_prop', 'two_samp_z_prop',
     'one_samp_z', 'two_samp_z',
@@ -42,7 +43,7 @@ def find_p_value(test_statistic: float, df: float = np.inf, tails: bool = True) 
     Parameters
     ----------
     test_statistic: float
-        The
+        The t or z test statistic
     df: float
         The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is assumed to be a
         t-test.
@@ -65,6 +66,38 @@ def find_p_value(test_statistic: float, df: float = np.inf, tails: bool = True) 
         np.abs(test_statistic),
         loc=0.0, scale=1.0,
     ) * tails
+
+
+def find_test_statistic(p_value: float, df: float = np.inf, tails: bool = True) -> float:
+    """
+    A convenience function for recovering t and z test statics from p-values
+
+    Parameters
+    ----------
+    p_value: float
+        The p-value of interest
+    df: float
+        The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is
+        assumed to be a t-test. The degrees freedom is usually the number of total samples minus one
+        for the t test.
+    tails: bool
+        An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this
+        assumes a one tailed test.
+
+    Returns
+    -------
+    float
+        The corresponding test statistic
+    """
+
+    if p_value <= 0.0 or p_value >= 1.0:
+        raise ValueError("Input p must be a float between 0 and 1 non-inclusive.")
+
+    p = 1.0 - p_value
+    p = (1.0 + p) / 2.0 if tails is True else p
+    if df == np.inf:
+        return norm(loc=0.0, scale=1.0).ppf(p)
+    return t(loc=0.0, scale=1.0, df=df).ppf(p)
 
 
 def find_confidence_interval(se: float, df: float = np.inf, alpha: float = 0.05, tails: float = True) -> float:
@@ -100,79 +133,6 @@ def find_confidence_interval(se: float, df: float = np.inf, alpha: float = 0.05,
         q=q, loc=0.0, scale=1.0,
     )
 
-
-_z_scores = linspace(-3, 3, 1000)
-_z_probabilities = norm(loc=0.0, scale=1.0).cdf(_z_scores)
-
-
-def get_zscore(p: float = 0.975) -> float:
-    """
-    get_zscore
-
-    Find the z score for the probability p. Z scores are appropriate when the population variance
-    is known or the sample size is large enough that the sample variance can be assumed to be a
-    good proxy for the population variance.
-
-    Parameters
-    ----------
-    p: float
-        the probability that the user wants converted to a z score
-
-    Returns
-    -------
-    float
-        the corresponding z score
-
-    Examples
-    --------
-    >>> z_score = get_zscore(0.99)
-
-    """
-
-    if p <= 0.0 or p >= 1.0:
-        raise ValueError("Input p must be a float between 0 and 1 non-inclusive.")
-    return _z_scores[
-        where(_z_probabilities <= p)[0][-1]
-    ]
-
-
-_t_scores = linspace(-3, 3, 1000)
-
-
-def get_tscore(p: float = 0.975, sample_size: int = 1000000000) -> float:
-    """
-    get_tscore
-
-    Find the t score for the probability p. T scores are appropriate when the population variance
-    is unknown. This is usually the case for small sample sizes.
-
-    Parameters
-    ----------
-    p: float
-        the probability that the user wants converted to a t score
-    sample_size: int
-        the size of the sample used in the experiment
-
-    Returns
-    -------
-    float
-        the corresponding t score
-
-    Examples
-    --------
-    >>> t_score = get_tscore(0.99, 1000)
-
-    """
-
-    if p <= 0.0 or p >= 1.0:
-        raise ValueError("Input p must be a float between 0 and 1 non-inclusive.")
-    sample_size -= 1 # Bessel correction
-    if sample_size == 0.0:
-        raise ValueError("The input sample_size must be greater than 1.")
-    t_probabilities = t(loc=0.0, scale=1.0, df=sample_size).cdf(_t_scores)
-    return _t_scores[
-        where(t_probabilities <= p)[0][-1]
-    ]
 
 ################################################################################
 # educational functions (not for production use)
@@ -245,7 +205,7 @@ def standard_deviation(arr: ndarray, ddof: int = 0) -> float:
     return np.sqrt(variance(arr, ddof=ddof))
 
 ################################################################################
-# normal approximation proportions tests
+# normal approximation (z) proportions tests
 
 
 def _one_samp_z_prop(n: int, successes: int, null_h: float = 0.5) -> Tuple[float, float]:
@@ -337,7 +297,11 @@ def _two_samp_z_prop(n1: int, n2: int, successes1: int, successes2: int, null_h:
         The number of events in sample two.
     null_h: float
         The point null hypothesis to use when comparing the means.
-    pooled
+    pooled: bool
+        Indicates whether to use the assumption that the sample variances are equal or not.
+        Pooled = True assumes that the variances are equal. It is common to use the pooled
+        assumption given that the unpooled assumption yields over confident estimates in practice
+        (barring the appropriate corrections).
 
     Returns
     -------
@@ -350,11 +314,11 @@ def _two_samp_z_prop(n1: int, n2: int, successes1: int, successes2: int, null_h:
     p2 = successes2 / n2
     if pooled:
         p = (successes1 + successes2) / (n1 + n2)
-        se = np.sqrt(p * (1.0 - p)(1.0 / (n1 - 1.0) + 1.0 / (n2 - 1.0)))
+        se = np.sqrt(p * (1.0 - p) * (1.0 / n1 + 1.0 / n2))
     else:
         se = np.sqrt(
-            p1 * (1.0 - p1) / (n1 - 1.0) +
-            p2 * (1.0 - p2) / (n2 - 1.0)
+            p1 * (1.0 - p1) / n1 +
+            p2 * (1.0 - p2) / n2
         )
     z = (p1 - p2 - null_h) / se
     return z, se
@@ -373,7 +337,11 @@ def two_samp_z_prop(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, poo
         A numpy array with the unit level data from the second sample.
     null_h: float
         The point null hypothesis to use when comparing the means.
-    pooled
+    pooled: bool
+        Indicates whether to use the assumption that the sample variances are equal or not.
+        Pooled = True assumes that the variances are equal. It is common to use the pooled
+        assumption given that the unpooled assumption yields over confident estimates in practice
+        (barring the appropriate corrections).
 
     Returns
     -------
@@ -389,7 +357,7 @@ def two_samp_z_prop(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, poo
     return _two_samp_z_prop(n1, n2, successes1, successes2, null_h=null_h, pooled=pooled)
 
 ################################################################################
-# normal tests
+# normal (z) tests
 
 
 def _one_samp_z(n: int, mu: float, sigma: float, null_h: float = 0.0) -> Tuple[float, float]:
@@ -414,7 +382,7 @@ def _one_samp_z(n: int, mu: float, sigma: float, null_h: float = 0.0) -> Tuple[f
     float
         standard error
     """
-    se = sigma / np.sqrt(n - 1.0)
+    se = sigma / np.sqrt(n)
     z = (mu - null_h) / se
     return z, se
 
@@ -439,7 +407,7 @@ def one_samp_z(sample: ndarray, null_h: float = 0.0) -> Tuple[float, float]:
     """
     n = sample.shape[0]
     mu = sample.mean()
-    sigma = sample.std()
+    sigma = sample.std(ddof=1)
     return _one_samp_z(n=n, mu=mu, sigma=sigma, null_h=null_h)
 
 
@@ -466,7 +434,8 @@ def paired_z(sample1: ndarray, sample2: ndarray, null_h: float = 0.0) -> Tuple[f
     return one_samp_z(sample=sample1-sample2, null_h=null_h)
 
 
-def _two_samp_z(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2: float, null_h: float = 0.0) -> \
+def _two_samp_z(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2: float,
+                null_h: float = 0.0, pooled: bool = False) -> \
         Tuple[float, float]:
     """
     Function for a two sample z test.
@@ -487,6 +456,11 @@ def _two_samp_z(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2:
         The standard deviation of the second sample.
     null_h: float
         The point null hypothesis to use when comparing the means.
+    pooled: bool
+        Indicates whether to use the assumption that the sample variances are equal or not.
+        Pooled = True assumes that the variances are equal. It is common to use the pooled
+        assumption given that the unpooled assumption yields over confident estimates in practice
+        (barring the appropriate corrections).
 
     Returns
     -------
@@ -495,15 +469,17 @@ def _two_samp_z(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2:
     float
         standard error
     """
-    if sigma2:
-        se = np.sqrt(sigma1**2.0 / (n1 - 1.0) + sigma2**2.0 / (n2 - 1.0))
+    if pooled:
+        se = np.sqrt(
+            (n1 * sigma1 ** 2.0 + n2 * sigma2 ** 2.0) / (n1 + n2 - 2) * (1.0 / n1 + 1.0 / n2)
+        )
     else:
-        se = sigma1 / np.sqrt(n1 + n2 - 2.0)
+        se = np.sqrt(sigma1**2.0 / n1 + sigma2**2.0 / n2)
     z = (mu1 - mu2 - null_h) / se
     return z, se
 
 
-def two_samp_z(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled=False) -> Tuple[float, float]:
+def two_samp_z(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: bool = False) -> Tuple[float, float]:
     """
     Function for a two sample z test.
 
@@ -516,8 +492,10 @@ def two_samp_z(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled=F
     null_h: float
         The point null hypothesis to use when comparing the means.
     pooled: bool
-        Indicates whether to use the assumptions that the sample variances are equal or not. Pooled = True assumes that
-        the variances are equal. The un-pooled t-test is sometimes called Welch's t-test
+        Indicates whether to use the assumption that the sample variances are equal or not.
+        Pooled = True assumes that the variances are equal. It is common to use the pooled
+        assumption given that the unpooled assumption yields over confident estimates in practice
+        (barring the appropriate corrections).
 
     Returns
     -------
@@ -530,12 +508,10 @@ def two_samp_z(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled=F
     n2 = sample2.shape[0]
     mu1 = sample1.mean()
     mu2 = sample2.mean()
-    if pooled:
-        sigma = np.concatenate([sample1, sample2]).std()
-        return _two_samp_z(n1=n1, n2=n2, mu1=mu1, mu2=mu2, sigma1=sigma, sigma2=None, null_h=null_h)
     sigma1 = sample1.std()
     sigma2 = sample2.std()
-    return _two_samp_z(n1=n1, n2=n2, mu1=mu1, mu2=mu2, sigma1=sigma1, sigma2=sigma2, null_h=null_h)
+    return _two_samp_z(n1=n1, n2=n2, mu1=mu1, mu2=mu2, sigma1=sigma1, sigma2=sigma2, null_h=null_h,
+                       pooled=pooled)
 
 ################################################################################
 # student t tests
@@ -655,6 +631,20 @@ def _two_samp_t(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2:
         standard error
     float
         degrees freedom
+
+    Examples
+    --------
+    >>> t_stat, se, df = two_samp_t(
+    >>>     n1 = 13, n2 = 10,
+    >>>     mu1 = 1.1, mu2 = 1.0,
+    >>>     sigma1 = 3.0, sigma2 = 2.0,
+    >>>     null_h = 0.0, pooled = False
+    >>> )
+
+    References
+    ----------
+    Bernard Rosner
+        * Eq 8.11, 8.21 Fundamentals of Biostatistics
     """
 
     # v1 = sigma1**2.0
@@ -708,6 +698,19 @@ def two_samp_t(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: 
         standard error
     float
         degrees freedom
+
+    Examples
+    --------
+    >>> t_stat, se, df = two_samp_t(
+    >>>     sample1 = np.asarray([1, 2, 3]),
+    >>>     sample2 = np.asarray([1, 2, 3]),
+    >>>     null_h = 0.0, pooled = False
+    >>> )
+
+    References
+    ----------
+    Bernard Rosner
+        * Eq 8.11, 8.21 Fundamentals of Biostatistics
     """
 
     n1 = sample1.shape[0]

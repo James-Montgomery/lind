@@ -172,4 +172,4 @@ software engineer.
 
 Many of the best packages for experimental design are written in R. The link
 below is a comprehensive survey of useful DOE (Design of Experiments) packages
-in R:[LINK](https://cran.r-project.org/web/views/ExperimentalDesign.html).
+in R: [LINK](https://cran.r-project.org/web/views/ExperimentalDesign.html).

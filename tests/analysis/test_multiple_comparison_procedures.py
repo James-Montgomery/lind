@@ -1,13 +1,11 @@
 """
 multiple comparisons corrections
 
-Known q values are taken from Rosetta Code based on R stats `p.adjust` version 4.1.0
+Known q values are taken from Rosetta Code (website) based on R stats `p.adjust` version 4.1.0
 """
 
-from numpy import abs
-
 import pytest
-
+from numpy import abs
 from lind.analysis.multiple_comparison_procedures import bh, by, bonferonni, holm, hommel, hochberg
 
 
