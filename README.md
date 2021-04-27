@@ -115,6 +115,8 @@ in `pytest.ini`.
 pytest
 ```
 
+We aspire to no lower than 80% code coverage for unit tests.
+
 ### Running the style tests
 
 Having neat and legible code is important. Having documentation is also
@@ -127,6 +129,8 @@ Linting presets are defined in pylintrc.
 ```
 pylint lind
 ```
+
+We aspire to no lower than an 8.0 / 10.0 style score when linting.
 
 ## Contributor's Guide
 

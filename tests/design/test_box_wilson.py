@@ -2,8 +2,6 @@
 plackett_burman module tests
 """
 
-from numpy import any
-
 import pytest
 
 from lind.design.box_wilson import design_box_wilson

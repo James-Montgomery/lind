@@ -66,7 +66,10 @@ logger = logging.getLogger(__name__)
 
 # define public functions (ignored by jupyter notebooks)
 __all__ = [
-    "recommend_inner_array", "fetch_inner_array", "append_outer_array", "interaction_diagrams"
+    "recommend_inner_array",
+    "fetch_inner_array",
+    "append_outer_array",
+    "interaction_diagrams"
 ]
 
 
@@ -208,7 +211,7 @@ def append_outer_array(inner_array: DataFrame, noise_factors: List[List],
 
 
 def interaction_diagrams(design_name: str, save_path: Optional[str] = None,
-                    file_name: Optional[str] = None) -> None:
+                         file_name: Optional[str] = None) -> None:
     """
     interaction_diagrams
 

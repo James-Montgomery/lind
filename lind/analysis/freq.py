@@ -9,12 +9,14 @@ squared error in these estimations. When n is large this correction is small.
 
 TODO: add continuity corrections to unpooled z tests
 """
-import numpy as np
-from numpy import ndarray, linspace, where
-from scipy.stats import norm, t
-from scipy import stats
+
 from typing import Tuple
 import logging
+
+import numpy as np
+from numpy import ndarray
+from scipy.stats import norm, t
+from scipy import stats
 
 # set logging
 logging.basicConfig(level=logging.INFO)
@@ -45,11 +47,11 @@ def find_p_value(test_statistic: float, df: float = np.inf, tails: bool = True) 
     test_statistic: float
         The t or z test statistic
     df: float
-        The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is assumed to be a
-        t-test.
+        The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is
+        assumed to be a t-test.
     tails: bool
-        An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this assumes a one tailed
-        test.
+        An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this
+        assumes a one tailed test.
 
     Returns
     -------
@@ -100,7 +102,8 @@ def find_test_statistic(p_value: float, df: float = np.inf, tails: bool = True) 
     return t(loc=0.0, scale=1.0, df=df).ppf(p)
 
 
-def find_confidence_interval(se: float, df: float = np.inf, alpha: float = 0.05, tails: float = True) -> float:
+def find_confidence_interval(se: float, df: float = np.inf, alpha: float = 0.05,
+                             tails: float = True) -> float:
     """
     A convenience function for finding the confidence interval based on the standard error.
 
@@ -109,13 +112,13 @@ def find_confidence_interval(se: float, df: float = np.inf, alpha: float = 0.05,
     se: float
         The standard error of the measurement (estimate).
     df: float
-        The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is assumed to be a
-        t-test.
+        The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is
+        assumed to be a t-test.
     alpha: float
         The probability of making a type I error. A 95% credible interval has alpha = 5% or .05.
     tails: bool
-        An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this assumes a one tailed
-        test.
+        An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this
+        assumes a one tailed test.
 
     Returns
     -------
@@ -153,14 +156,14 @@ def mean(arr: ndarray) -> float:
     float
         The mean (average).
     """
-    logger.warning("Please use the mean function in the numpy project instead.")  # pragma: no cover
-    return np.sum(arr) / arr.shape[0]  # pragma: no cover
+    logger.warning("Please use the mean function in the numpy project instead.")
+    return np.sum(arr) / arr.shape[0]
 
 
 def variance(arr: ndarray, ddof: int = 0) -> float:
     """
-    An example of how variance is calculated. This function is for educational purposes only. Please use
-    np.var(arr, ddof) instead.
+    An example of how variance is calculated. This function is for educational purposes only. Please
+    use np.var(arr, ddof) instead.
 
     Parameters
     ----------
@@ -174,24 +177,23 @@ def variance(arr: ndarray, ddof: int = 0) -> float:
     float
         The variance.
     """
-    logger.warning("Please use the stddev "                   # pragma: no cover
-                   "function in the numpy project instead.")  # pragma: no cover
-    assert ddof >= 0, "Degrees freedom must be greater than or equal to 0"  # pragma: no cover
+    logger.warning("Please use the stddev function in the numpy project instead.")
+    assert ddof >= 0, "Degrees freedom must be greater than or equal to 0"
     # Number of observations
-    n = arr.shape[0]  # pragma: no cover
-    assert ddof < n, "Degrees freedom must be less than total observations"  # pragma: no cover
+    n = arr.shape[0]
+    assert ddof < n, "Degrees freedom must be less than total observations"
     # Mean of the data
-    mu = np.sum(arr) / n  # pragma: no cover
+    mu = np.sum(arr) / n
     # Square deviations
-    deviations = (arr - mu)**2.0  # pragma: no cover
+    deviations = (arr - mu)**2.0
     # Variance
-    return np.sum(deviations) / (n - ddof)  # pragma: no cover
+    return np.sum(deviations) / (n - ddof)
 
 
 def standard_deviation(arr: ndarray, ddof: int = 0) -> float:
     """
-    An example of how standard deviation is calculated. This function is for educational purposes only. Please use
-    np.std(arr, ddof) instead.
+    An example of how standard deviation is calculated. This function is for educational purposes
+    only. Please use np.std(arr, ddof) instead.
 
     Parameters
     ----------
@@ -205,9 +207,8 @@ def standard_deviation(arr: ndarray, ddof: int = 0) -> float:
     float
         The standard deviation.
     """
-    logger.warning("Please use the stddev "                   # pragma: no cover
-                   "function in the numpy project instead.")  # pragma: no cover
-    return np.sqrt(variance(arr, ddof=ddof))  # pragma: no cover
+    logger.warning("Please use the stddev function in the numpy project instead.")
+    return np.sqrt(variance(arr, ddof=ddof))
 
 ################################################################################
 # normal approximation (z) proportions tests
@@ -233,6 +234,7 @@ def _one_samp_z_prop(n: int, successes: int, null_h: float = 0.5) -> Tuple[float
     float
         standard error
     """
+    assert successes <= n, "Input successes must be less than or equal to n."
     p_hat = successes / n
     se = np.sqrt(p_hat * (1.0 - p_hat) / (n - 1.0))
     z = (p_hat - null_h) / se
@@ -264,7 +266,8 @@ def one_samp_z_prop(sample: ndarray, null_h: float = 0.5) -> Tuple[float, float]
 
 def paired_z_prop(sample1: ndarray, sample2: ndarray, null_h: float = 0.5) -> Tuple[float, float]:
     """
-    Function for paired z test of proportions. Math is the same as for a one sample z test of proportions.
+    Function for paired z test of proportions. Math is the same as for a one sample z test of
+    proportions.
 
     Parameters
     ----------
@@ -285,8 +288,8 @@ def paired_z_prop(sample1: ndarray, sample2: ndarray, null_h: float = 0.5) -> Tu
     return one_samp_z_prop(sample=sample1-sample2, null_h=null_h)
 
 
-def _two_samp_z_prop(n1: int, n2: int, successes1: int, successes2: int, null_h: float = 0.0, pooled: bool = False) -> \
-        Tuple[float, float]:
+def _two_samp_z_prop(n1: int, n2: int, successes1: int, successes2: int, null_h: float = 0.0,
+                     pooled: bool = False) -> Tuple[float, float]:
     """
     Function for two sample z test of proportions.
 
@@ -315,6 +318,8 @@ def _two_samp_z_prop(n1: int, n2: int, successes1: int, successes2: int, null_h:
     float
         standard error
     """
+    assert successes1 <= n1, "Input successes1 must be less than or equal to n1."
+    assert successes2 <= n2, "Input successes2 must be less than or equal to n2."
     p1 = successes1 / n1
     p2 = successes2 / n2
     if pooled:
@@ -329,8 +334,8 @@ def _two_samp_z_prop(n1: int, n2: int, successes1: int, successes2: int, null_h:
     return z, se
 
 
-def two_samp_z_prop(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: bool = False) -> \
-        Tuple[float, float]:
+def two_samp_z_prop(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: bool = False) \
+        -> Tuple[float, float]:
     """
     Function for two sample z test of proportions.
 
@@ -484,7 +489,8 @@ def _two_samp_z(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2:
     return z, se
 
 
-def two_samp_z(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: bool = False) -> Tuple[float, float]:
+def two_samp_z(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: bool = False) -> \
+        Tuple[float, float]:
     """
     Function for a two sample z test.
 
@@ -584,7 +590,8 @@ def paired_t(sample1: ndarray, sample2: ndarray, null_h: float = 0.0) -> Tuple[f
     sample1 : ndarray
         A numpy array with the unit level data from the first sample.
     sample2 : ndarray
-        A numpy array with the unit level data from the second sample. Must be the same dimensions as sample1.
+        A numpy array with the unit level data from the second sample. Must be the same dimensions
+        as sample1.
     null_h: float
         The point null hypothesis to use when comparing the means.
 
@@ -600,8 +607,8 @@ def paired_t(sample1: ndarray, sample2: ndarray, null_h: float = 0.0) -> Tuple[f
     return one_samp_t(sample=sample1-sample2, null_h=null_h)
 
 
-def _two_samp_t(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2: float, null_h: float = 0.0,
-                pooled: bool = False) -> Tuple[float, float, float]:
+def _two_samp_t(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2: float,
+                null_h: float = 0.0, pooled: bool = False) -> Tuple[float, float, float]:
     """
     A simple function for running two sample student t tests.
 
@@ -625,8 +632,9 @@ def _two_samp_t(n1: int, n2: int, mu1: float, mu2: float, sigma1: float, sigma2:
     null_h: float
         The point null hypothesis to use when comparing the means.
     pooled: bool
-        Indicates whether to use the assumptions that the sample variances are equal or not. Pooled = True assumes that
-        the variances are equal. The un-pooled t-test is sometimes called Welch's t-test
+        Indicates whether to use the assumptions that the sample variances are equal or not.
+        Pooled = True assumes that the variances are equal. The un-pooled t-test is sometimes
+        called Welch's t-test.
 
     Returns
     -------
@@ -692,8 +700,9 @@ def two_samp_t(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: 
     null_h: float
         The point null hypothesis to use when comparing the means.
     pooled: bool
-        Indicates whether to use the assumptions that the sample variances are equal or not. Pooled = True assumes that
-        the variances are equal. The un-pooled t-test is sometimes called Welch's t-test
+        Indicates whether to use the assumptions that the sample variances are equal or not.
+        Pooled = True assumes that the variances are equal. The un-pooled t-test is sometimes
+        called Welch's t-test
 
     Returns
     -------
@@ -724,4 +733,9 @@ def two_samp_t(sample1: ndarray, sample2: ndarray, null_h: float = 0.0, pooled: 
     mu2 = sample2.mean()
     sigma1 = sample1.std(ddof=1)
     sigma2 = sample2.std(ddof=1)
-    return _two_samp_t(n1=n1, n2=n2, mu1=mu1, mu2=mu2, sigma1=sigma1, sigma2=sigma2, null_h=null_h, pooled=pooled)
+    return _two_samp_t(
+        n1=n1, n2=n2,
+        mu1=mu1, mu2=mu2,
+        sigma1=sigma1, sigma2=sigma2,
+        null_h=null_h, pooled=pooled
+    )

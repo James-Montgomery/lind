@@ -23,9 +23,13 @@ Code snippets are indicated by three greater-than signs::
 Use the built-in ``help`` function to view a function's docstring::
   >>> help(ld.design.design_full_factorial)
 
+For contributors, we have a template docstring at the bottom of this file for
+reference. The style is a modified numpy style docstring. We have added sections
+for academic references and statistical notes.
 """
 
-from importlib.util import find_spec as _find_spec # requires python >= 3.3
+from importlib.util import find_spec as _find_spec  # requires python >= 3.3
+
 if _find_spec('rpy2') is not None:
     from lind import r_backends
 if _find_spec('lind_static_resources') is not None:
@@ -33,10 +37,42 @@ if _find_spec('lind_static_resources') is not None:
 else:
     _sfap = None
 
-from ._version import __version__
-
 from lind import (
     design,
     analysis,
     library
 )
+
+from ._version import __version__
+
+# example / template docstring based on numpy style
+
+"""
+function name
+
+Short description.
+
+Parameters
+----------
+parameter_one : type
+    Parameter description.
+
+Returns
+-------
+type
+    Return value description
+
+Examples
+--------
+>>> function(args)
+
+References
+----------
+Author
+    * Title
+
+Notes
+-----
+* Short note on math.
+
+"""
