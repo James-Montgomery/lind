@@ -153,7 +153,8 @@ def mean(arr: ndarray) -> float:
     float
         The mean (average).
     """
-    return np.sum(arr) / arr.shape[0]
+    logger.warning("Please use the mean function in the numpy project instead.")  # pragma: no cover
+    return np.sum(arr) / arr.shape[0]  # pragma: no cover
 
 
 def variance(arr: ndarray, ddof: int = 0) -> float:
@@ -173,16 +174,18 @@ def variance(arr: ndarray, ddof: int = 0) -> float:
     float
         The variance.
     """
-    assert ddof >= 0, "Degrees freedom must be greater than or equal to 0"
+    logger.warning("Please use the stddev "                   # pragma: no cover
+                   "function in the numpy project instead.")  # pragma: no cover
+    assert ddof >= 0, "Degrees freedom must be greater than or equal to 0"  # pragma: no cover
     # Number of observations
-    n = arr.shape[0]
-    assert ddof < n, "Degrees freedom must be less than the number of observations"
+    n = arr.shape[0]  # pragma: no cover
+    assert ddof < n, "Degrees freedom must be less than total observations"  # pragma: no cover
     # Mean of the data
-    mu = np.sum(arr) / n
+    mu = np.sum(arr) / n  # pragma: no cover
     # Square deviations
-    deviations = (arr - mu)**2.0
+    deviations = (arr - mu)**2.0  # pragma: no cover
     # Variance
-    return np.sum(deviations) / (n - ddof)
+    return np.sum(deviations) / (n - ddof)  # pragma: no cover
 
 
 def standard_deviation(arr: ndarray, ddof: int = 0) -> float:
@@ -202,7 +205,9 @@ def standard_deviation(arr: ndarray, ddof: int = 0) -> float:
     float
         The standard deviation.
     """
-    return np.sqrt(variance(arr, ddof=ddof))
+    logger.warning("Please use the stddev "                   # pragma: no cover
+                   "function in the numpy project instead.")  # pragma: no cover
+    return np.sqrt(variance(arr, ddof=ddof))  # pragma: no cover
 
 ################################################################################
 # normal approximation (z) proportions tests

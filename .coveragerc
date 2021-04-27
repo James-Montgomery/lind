@@ -1,5 +1,9 @@
 [run]
-omit = */_version.py, lind/r_backends/*
+omit =
+    */_version.py,
+    lind/r_backends/*,
+    */__init__.py,
+    */_taguchi_line_diagrams.py,
 
 [html]
 directory = ./docs/coverage
