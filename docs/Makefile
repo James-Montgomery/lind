@@ -20,9 +20,9 @@ help:
 	echo --- Install local package with tests in editable mode . . .
 	cd .. && pip -q install -e .["tests"] # must install as  editable for autodocs to work
 	echo --- Run package tests and generate coverage report . . .
-	cd .. && pytest
+	cd .. && pytest -n 4
 	echo --- Run package style checks and generate style report . . .
-	cd .. && pylint -f text lind > ./docs/style/pylint_report.txt || echo "required to avoid makefile error"
+	cd .. && pylint -n 4 -f text lind > ./docs/style/pylint_report.txt || echo "required to avoid makefile error"
 	echo --- Run autodoc to update package documentation . . .
 	sphinx-apidoc -f -o source/ ../lind
 	echo --- Run documentation coverage rport . . .

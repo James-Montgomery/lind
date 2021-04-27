@@ -1,6 +1,13 @@
 lind.design package
 ===================
 
+Subpackages
+-----------
+
+.. toctree::
+
+   lind.design.randomization
+
 Submodules
 ----------
 
@@ -40,6 +47,14 @@ lind.design.plackett\_burman module
 -----------------------------------
 
 .. automodule:: lind.design.plackett_burman
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+lind.design.taguchi module
+--------------------------
+
+.. automodule:: lind.design.taguchi
    :members:
    :undoc-members:
    :show-inheritance:

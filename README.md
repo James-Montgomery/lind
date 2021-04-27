@@ -72,6 +72,11 @@ install with static file support:
 pip install -U "lind[tests, r_backends, static_designs]"
 ```
 
+### Installation Troubleshooting
+
+If you see an error like `Python is not installed as a framework.`, please reference this 
+[solution](https://stackoverflow.com/questions/34977388/matplotlib-runtimeerror-python-is-not-installed-as-a-framework).
+
 ### R Backends
 
 Many of the best experiment design packages are written in R due to the
@@ -84,7 +89,7 @@ installation relies only on python native code.
 **Warning:** We have chosen respected and reputable R packages to use as our
 backend where R code is used. However, code quality and accuracy of backend
 R code is not tested in this package. Please see the documentation for those
-packages to learn more about them. R package name are documented in the
+packages to learn more about them. R package names are documented in the
 appropriate module docstrings.
 
 ### Quick Start

@@ -173,6 +173,247 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-lind.analysis.freq">
+<span id="lind-analysis-freq-module"></span><h2>lind.analysis.freq module<a class="headerlink" href="#module-lind.analysis.freq" title="Permalink to this headline">¶</a></h2>
+<p>Frequentist Tests</p>
+<p>Note on estimating the population variance: We often use n-1 instead of n when estimating the
+population variance (Bessel’s correction), where n is the number of samples. This method corrects
+the bias in the estimation of the population variance. It also partially corrects the bias in the
+estimation of the population standard deviation. However, the correction often increases the mean
+squared error in these estimations. When n is large this correction is small.</p>
+<p>TODO: add continuity corrections to unpooled z tests</p>
+<dl class="function">
+<dt id="lind.analysis.freq.find_p_value">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">find_p_value</code><span class="sig-paren">(</span><em class="sig-param">test_statistic: float</em>, <em class="sig-param">df: float = inf</em>, <em class="sig-param">tails: bool = True</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#lind.analysis.freq.find_p_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience function for finding p values for t tests and z tests.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>sf is 1 - cdf</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_statistic</strong> (<em>float</em>) – The t or z test statistic</p></li>
+<li><p><strong>df</strong> (<em>float</em>) – The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is
+assumed to be a t-test.</p></li>
+<li><p><strong>tails</strong> (<em>bool</em>) – An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this
+assumes a one tailed test.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The p value corresponding to the test statistic.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.find_test_statistic">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">find_test_statistic</code><span class="sig-paren">(</span><em class="sig-param">p_value: float</em>, <em class="sig-param">df: float = inf</em>, <em class="sig-param">tails: bool = True</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#lind.analysis.freq.find_test_statistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience function for recovering t and z test statics from p-values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p_value</strong> (<em>float</em>) – The p-value of interest</p></li>
+<li><p><strong>df</strong> (<em>float</em>) – The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is
+assumed to be a t-test. The degrees freedom is usually the number of total samples minus one
+for the t test.</p></li>
+<li><p><strong>tails</strong> (<em>bool</em>) – An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this
+assumes a one tailed test.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The corresponding test statistic</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.find_confidence_interval">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">find_confidence_interval</code><span class="sig-paren">(</span><em class="sig-param">se: float</em>, <em class="sig-param">df: float = inf</em>, <em class="sig-param">alpha: float = 0.05</em>, <em class="sig-param">tails: float = True</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#lind.analysis.freq.find_confidence_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience function for finding the confidence interval based on the standard error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>se</strong> (<em>float</em>) – The standard error of the measurement (estimate).</p></li>
+<li><p><strong>df</strong> (<em>float</em>) – The degrees freedom. If infinity (np.inf), this is assumed to be a z test. Otherwise it is
+assumed to be a t-test.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The probability of making a type I error. A 95% credible interval has alpha = 5% or .05.</p></li>
+<li><p><strong>tails</strong> (<em>bool</em>) – An indicator for two tailed tests. If True, this assumes a two tailed test. If False, this
+assumes a one tailed test.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The width of the confidence interval (absolute units).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.one_samp_z_prop">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">one_samp_z_prop</code><span class="sig-paren">(</span><em class="sig-param">sample: numpy.ndarray</em>, <em class="sig-param">null_h: float = 0.5</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float]<a class="headerlink" href="#lind.analysis.freq.one_samp_z_prop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for one sample z test of proportions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample</strong> (<em>ndarray</em>) – An array of samples (observations).</p></li>
+<li><p><strong>null_h</strong> (<em>float</em>) – The point null hypothesis to use when comparing the means.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – test statistic (t statistic)</p></li>
+<li><p><em>float</em> – standard error</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.two_samp_z_prop">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">two_samp_z_prop</code><span class="sig-paren">(</span><em class="sig-param">sample1: numpy.ndarray</em>, <em class="sig-param">sample2: numpy.ndarray</em>, <em class="sig-param">null_h: float = 0.0</em>, <em class="sig-param">pooled: bool = False</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float]<a class="headerlink" href="#lind.analysis.freq.two_samp_z_prop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for two sample z test of proportions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample1</strong> (<em>ndarray</em>) – A numpy array with the unit level data from the first sample.</p></li>
+<li><p><strong>sample2</strong> (<em>ndarray</em>) – A numpy array with the unit level data from the second sample.</p></li>
+<li><p><strong>null_h</strong> (<em>float</em>) – The point null hypothesis to use when comparing the means.</p></li>
+<li><p><strong>pooled</strong> (<em>bool</em>) – Indicates whether to use the assumption that the sample variances are equal or not.
+Pooled = True assumes that the variances are equal. It is common to use the pooled
+assumption given that the unpooled assumption yields over confident estimates in practice
+(barring the appropriate corrections).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – test statistic (t statistic)</p></li>
+<li><p><em>float</em> – standard error</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.one_samp_z">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">one_samp_z</code><span class="sig-paren">(</span><em class="sig-param">sample: numpy.ndarray</em>, <em class="sig-param">null_h: float = 0.0</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float]<a class="headerlink" href="#lind.analysis.freq.one_samp_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for one sample z test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample</strong> (<em>ndarray</em>) – An array of samples (observations).</p></li>
+<li><p><strong>null_h</strong> (<em>float</em>) – The point null hypothesis to use when comparing the means.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – test statistic (t statistic)</p></li>
+<li><p><em>float</em> – standard error</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.two_samp_z">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">two_samp_z</code><span class="sig-paren">(</span><em class="sig-param">sample1: numpy.ndarray</em>, <em class="sig-param">sample2: numpy.ndarray</em>, <em class="sig-param">null_h: float = 0.0</em>, <em class="sig-param">pooled: bool = False</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float]<a class="headerlink" href="#lind.analysis.freq.two_samp_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for a two sample z test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample1</strong> (<em>ndarray</em>) – A numpy array with the unit level data from the first sample.</p></li>
+<li><p><strong>sample2</strong> (<em>ndarray</em>) – A numpy array with the unit level data from the second sample.</p></li>
+<li><p><strong>null_h</strong> (<em>float</em>) – The point null hypothesis to use when comparing the means.</p></li>
+<li><p><strong>pooled</strong> (<em>bool</em>) – Indicates whether to use the assumption that the sample variances are equal or not.
+Pooled = True assumes that the variances are equal. It is common to use the pooled
+assumption given that the unpooled assumption yields over confident estimates in practice
+(barring the appropriate corrections).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – test statistic (t statistic)</p></li>
+<li><p><em>float</em> – standard error</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.one_samp_t">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">one_samp_t</code><span class="sig-paren">(</span><em class="sig-param">sample: numpy.ndarray</em>, <em class="sig-param">null_h: float = 0.0</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#lind.analysis.freq.one_samp_t" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample</strong> (<em>ndarray</em>) – An array of samples (observations).</p></li>
+<li><p><strong>null_h</strong> (<em>float</em>) – The point null hypothesis to use when comparing the means.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – test statistic (t statistic)</p></li>
+<li><p><em>float</em> – standard error</p></li>
+<li><p><em>float</em> – degrees freedom</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lind.analysis.freq.two_samp_t">
+<code class="sig-prename descclassname">lind.analysis.freq.</code><code class="sig-name descname">two_samp_t</code><span class="sig-paren">(</span><em class="sig-param">sample1: numpy.ndarray</em>, <em class="sig-param">sample2: numpy.ndarray</em>, <em class="sig-param">null_h: float = 0.0</em>, <em class="sig-param">pooled: bool = False</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#lind.analysis.freq.two_samp_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple function for running two sample student t tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample1</strong> (<em>ndarray</em>) – A numpy array with the unit level data from the first sample.</p></li>
+<li><p><strong>sample2</strong> (<em>ndarray</em>) – A numpy array with the unit level data from the second sample.</p></li>
+<li><p><strong>null_h</strong> (<em>float</em>) – The point null hypothesis to use when comparing the means.</p></li>
+<li><p><strong>pooled</strong> (<em>bool</em>) – Indicates whether to use the assumptions that the sample variances are equal or not.
+Pooled = True assumes that the variances are equal. The un-pooled t-test is sometimes
+called Welch’s t-test</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – test statistic (t statistic)</p></li>
+<li><p><em>float</em> – standard error</p></li>
+<li><p><em>float</em> – degrees freedom</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t_stat</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">df</span> <span class="o">=</span> <span class="n">two_samp_t</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">sample1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">sample2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">null_h</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">pooled</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>Bernard Rosner</dt><dd><ul class="simple">
+<li><p>Eq 8.11, 8.21 Fundamentals of Biostatistics</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 <div class="section" id="module-lind.analysis.multiple_comparison_procedures">
 <span id="lind-analysis-multiple-comparison-procedures-module"></span><h2>lind.analysis.multiple_comparison_procedures module<a class="headerlink" href="#module-lind.analysis.multiple_comparison_procedures" title="Permalink to this headline">¶</a></h2>
 <p>multiple_comparison_procedures: This module contains functions to correct for multiple
@@ -183,6 +424,18 @@ comparison procedures (MCPs) are sometimes referred to as correction factors.</p
 translation of code in the R stats package and falls under the R 4.1.0 license (GPL v2).</p>
 <p>Most of the code in this module is based on R source code covered by the GPL license. It is thus a
 modified version covered by the GPL.</p>
+<p>FDR-controlling procedures are designed to control the expected proportion of “discoveries”
+(rejected null hypotheses) that are false (incorrect rejections of the null). FDR-controlling
+procedures provide less stringent control of Type I errors compared to family-wise error rate (FWER)
+controlling procedures, which control the probability of at least one Type I error.</p>
+<p>FDR-controlling procedures have greater power, at the cost of increased numbers of Type I errors.
+The power of a binary hypothesis test is the probability that the test rejects the null hypothesis
+when a specific alternative hypothesis is true (i.e. the probability of avoiding a type II error).</p>
+<p>A type I error is the rejection of a true null hypothesis (“false positive”), while a type II error
+is the non-rejection of a false null hypothesis (“false negative”).</p>
+<p>Sometimes experimenters prefer to use the language of sensitivity ans specificity.
+Sensitivity measures the proportion of positives that are correctly identified.
+Specificity measures the proportion of negatives that are correctly identified.</p>
 <p>Recommended import style:
 &gt;&gt;&gt; from lind.analysis import multiple_comparison_procedures as mcp</p>
 <dl class="simple">
